@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+{% block content %}
+	<div class="centered">
+		<div class="recycler">
+			<a href="/admin/resto/offre" target="_blank" class="basic-card bg-red">
+				<div class="title"> Offre</div>
+				<div class="details">Gerer les offres</div>
+			</a>
+			<a href="/admin/resto/produit" target="_blank" class="basic-card bg-red">
+				<div class="title"> Produit</div>
+				<div class="details">Gerer les produits</div>
+			</a>
+			<a href="/admin/resto/fournisseur" target="_blank" class="basic-card bg-red">
+				<div class="title"> Fournisseur</div>
+				<div class="details">Gerer les fournisseurs</div>
+			</a>
+			{% for produit in produits %}
+			<div class="basic-card bg-blue">
+				<div class="title">{{ produit.nom }}</div>
+				<div class="buttons">
+					<a href class="semi-button">- Sortie</a>
+					<a href class="semi-button border-left">+ Entrée</a>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock content %}

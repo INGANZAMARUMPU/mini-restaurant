@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cool Restaurant</title>
+    <link href="{% static "css/style.css" %}" rel="stylesheet" />
+    <script src="{% static "js/jquery.min.js" %}" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<ul class="floating-left-menu">
+	<li><a href="/">tables</a></li>
+	<li><a href="{% url 'commandes' %}">commandes</a></li>
+	<li><a href="{% url 'stock' %}">stock</a></li>
+	<li><a href="{% url 'menus' %}">menus</a></li>
+	<li><a href="{% url 'personnel' %}">personnel</a></li>
+</ul>
+{% block content %}
+<H1>WELCOME HOME</H1>
+<div class="centered">
+	<div class="recycler">
+		<a href="/admin/resto/table/" target="_blank" class="basic-card bg-red">
+			<div class="title"> Table</div>
+			<div class="details">Gerer les tables</div>
+		</a>
+		{% for table in tables %}
+		<div class="basic-card bg-blue">
+			<div class="title">Table{{ table.number }}</div>
+			<div class="buttons">
+				<a href="{% url 'commande_table' table.id %}" class="semi-button">+Commande</a>
+				<a href class="semi-button border-left">Payer</a>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock content %}
+</body>
+</html>

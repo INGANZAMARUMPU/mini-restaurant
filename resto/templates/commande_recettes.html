@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+<div class="centered">
+	<div class="recycler">
+		<a href="/admin/resto/recette/" target="_blank" class="basic-card bg-red">
+			<div class="title"> Recettes</div>
+			<div class="details">Gerer les recettes</div>
+		</a>
+		{% for recette in recettes %}
+		<div class="basic-card bg-blue">
+			<div class="title">{{ recette.nom }}</div>
+			<div class="buttons">
+				<button class="semi-button">+Commande</button>
+				<button class="semi-button border-left">Payer</button>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock content %}

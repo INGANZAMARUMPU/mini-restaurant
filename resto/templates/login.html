@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cool Restaurant</title>
+    <link href="{% static "css/style.css" %}" rel="stylesheet" />
+    <script src="{% static "js/jquery.min.js" %}" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div>
+	<form action="." method="post" class="login-form">
+    <h1>WELCOME BACK</h1>
+		{% csrf_token %}
+		{{ form.as_p }}
+    <input type="submit" name="submit" value="submit" class="btn right">
+	</form>
+</div>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
