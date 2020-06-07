@@ -1,31 +1,35 @@
 {% extends "index.html" %}
 {% load static %}
 {% block content %}
-	<div class="centered">
-		<div class="recycler">
-			{% for serveur in serveurs %}
-			<a href="{% url 'commande_serveur' id_table serveur.id %}">
-			<div class="user-card">
-				<div class="img-user">
-					<img src='{% if serveur.avatar %}
-						{{ serveur.avatar.url }}
+<form class="search-form">
+	<input type="text" placeholder="Keyword" class="search-input" id="id_username">
+	<button type="reset">X</button>
+</form>
+<div class="centered">		
+	<div class="recycler">
+		{% for serveur in serveurs %}
+		<a href="{% url 'commande_serveur' id_table serveur.id %}">
+		<div class="user-card">
+			<div class="img-user">
+				<img src='{% if serveur.avatar %}
+					{{ serveur.avatar.url }}
+				{% else %}
+					{% static "img/ic_user.png" %}
+				{% endif %}' alt="">
+			</div>
+			<div class="username">
+				<div><h3>{{ serveur.user.username }}</h3></div>
+				<div>
+					{% if serveur.user.first_name or serveur.user.last_name %}
+						{{ serveur.user.first_name }} {{ serveur.user.last_name }}
 					{% else %}
-						{% static "img/ic_user.png" %}
-					{% endif %}' alt="">
-				</div>
-				<div class="username">
-					<div><h3>{{ serveur.user.username }}</h3></div>
-					<div>
-						{% if serveur.user.first_name or serveur.user.last_name %}
-							{{ serveur.user.first_name }} {{ serveur.user.last_name }}
-						{% else %}
-							<span class="color-gray">no Firstname</span>
-						{% endif %}
-					</div>
+						<span class="color-gray">no Firstname</span>
+					{% endif %}
 				</div>
 			</div>
-			</a>
-			{% endfor %}
 		</div>
+		</a>
+		{% endfor %}
 	</div>
+</div>
 {% endblock content %}

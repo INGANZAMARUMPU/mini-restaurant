@@ -21,6 +21,20 @@ class StockView(View, LoginRequiredMixin):
 		produits = Produit.objects.all()
 		return render(request, self.template_name, locals())
 
+class MenuView(View, LoginRequiredMixin):
+	template_name = "menus.html"
+
+	def get(self, request, *args, **kwargs):
+		recettes = Recette.objects.all()
+		return render(request, self.template_name, locals())
+
+class PersonnelView(View, LoginRequiredMixin):
+	template_name = "personnel.html"
+
+	def get(self, request, *args, **kwargs):
+		serveurs = User.objects.all()
+		return render(request, self.template_name, locals())
+
 class CommandeView(View, LoginRequiredMixin):
 	template_name = "commande_serveurs.html"
 

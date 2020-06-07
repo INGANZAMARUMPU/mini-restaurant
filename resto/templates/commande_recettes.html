@@ -1,6 +1,15 @@
 {% extends "index.html" %}
 {% load static %}
 {% block content %}
+
+<ul class="floating-menu floating-left-top">
+	<li><a href="#" id="toggle-panier">panier</a></li>
+</ul>
+
+<form class="search-form">
+	<input type="text" placeholder="Keyword" class="search-input" id="id_username">
+	<button type="reset">X</button>
+</form>
 <div class="centered">
 	<div class="recycler">
 		<a href="/admin/resto/recette/" target="_blank" class="basic-card bg-red">
@@ -9,13 +18,84 @@
 		</a>
 		{% for recette in recettes %}
 		<div class="basic-card bg-blue">
-			<div class="title">{{ recette.nom }}</div>
+			<div class="img">
+				<img src="
+				{% if recette.image %}
+					{{ recette.image.url }}
+				{% else %}
+					{% static 'img/ic_user.png' %}
+				{% endif %} 
+				"/>
+			</div>
+			<div class="subtitle">{{ recette.nom }}</div>
 			<div class="buttons">
-				<button class="semi-button">+Commande</button>
-				<button class="semi-button border-left">Payer</button>
+				<button class="left-button bg-blue">-</button>
+				<label class="noir-blanc">0</label>
+				<button class="right-button bg-blue">+</button>
+			</div>
+		</div>
+		<div class="basic-card bg-blue">
+			<div class="img">
+				<img src="
+				{% if recette.image %}
+					{{ recette.image.url }}
+				{% else %}
+					{% static 'img/ic_user.png' %}
+				{% endif %} 
+				"/>
+			</div>
+			<div class="subtitle">{{ recette.nom }}</div>
+			<div class="buttons">
+				<button class="left-button bg-blue">-</button>
+				<label class="noir-blanc">0</label>
+				<button class="right-button bg-blue">+</button>
+			</div>
+		</div>
+		<div class="basic-card bg-blue">
+			<div class="img">
+				<img src="
+				{% if recette.image %}
+					{{ recette.image.url }}
+				{% else %}
+					{% static 'img/ic_user.png' %}
+				{% endif %} 
+				"/>
+			</div>
+			<div class="subtitle">{{ recette.nom }}</div>
+			<div class="buttons">
+				<button class="left-button bg-blue">-</button>
+				<label class="noir-blanc">0</label>
+				<button class="right-button bg-blue">+</button>
 			</div>
 		</div>
 		{% endfor %}
 	</div>
 </div>
+<div id="panier">
+	<div class="overlay"></div>
+	<div class="list">
+		<table>
+			<caption class="header-panier">Panier</caption>
+			<thead>
+				<tr class="panier-item">
+					<th>Name</th>
+					<th>price</th>
+					<th>quantity</th>
+					<th>total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="panier-item">
+					<td class="panier-name"></td>
+					<td class="panier-prix"></td>
+					<td class="panier-quantite"></td>
+					<td class="panier-total"></td>
+					<td><button>-</button></td>
+					<td><button>+</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script src="{% static 'js/panier.js' %}" type="text/javascript" charset="utf-8" async defer></script>
 {% endblock content %}

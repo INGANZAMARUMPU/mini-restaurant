@@ -17,11 +17,30 @@ body {
   background: #eee;
 }
 
-h1{
+h1, .title{
 	text-align: center;
+	width: 100%;
 }
 h3{
 	margin: 2px;
+}
+.search-form{
+	margin: 10px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.search-input{
+  padding: .5em;
+  margin: 5px;
+  font-size: 1.2em;
+  background: white;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+.search-form button{
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 .user-card{
 	display: flex;
@@ -91,30 +110,49 @@ button, .btn{
 	border-width: 0;
 	color: white;
 }
+button.left-button{
+	border-radius: 0px 0px 0px 8px;
+	width: 100%;
+}
+button.right-button{
+	border-radius: 0px 0px 8px 0px;
+	width: 100%;
+}
 button:hover, .btn:hover{
 	background: #006688;
 }
-.floating-left-menu{
+.floating-right-center{
 	position: fixed;
-	top: 45%;
 	right: 0%;
+	top: 45%;
+	transform: translate(0, -50%);
+	border-radius: 5px 0px 0px 5px;
+}
+.floating-left-top{
+	position: fixed;
+	left: 0%;
+	top: 15px;
+	transform: translate(0, -50%);
+	border-radius: 0px 5px 5px 0px;
+}
+.floating-menu{
+	position: fixed;
 	transform: translate(0, -50%);
 	background: #333;
 	padding: 0px;
-	border-radius: 5px 0px 0px 5px;
 }
-.floating-left-menu li *{
+.floating-menu li *{
 	color:#fff;
 	font-size: 1.2em;
 }
-.floating-left-menu li{
+.floating-menu li{
 	padding: 5px 10px 5px 10px;
 	font-size: 1.2em;
 	list-style-type: none;
 	width: 100%;
 	text-align: center;
 }
-.floating-left-menu li:hover{
+.floating-menu li:hover{
 	background: #000;
 }
 .centered{
@@ -133,6 +171,9 @@ button:hover, .btn:hover{
 	margin: 5px;
 	border-radius: 5px;
 	color: white;
+	overflow: hidden;
+	height: max-content;
+	align-self: flex-end;
 }
 .basic-card:hover{
 	opacity: .8;
@@ -142,10 +183,25 @@ button:hover, .btn:hover{
 	font-size: 1.5em;
 	margin: 10px;
 	margin-bottom: 0px;
+	text-align: left;
+}
+.basic-card .subtitle{
+	border-bottom: 1px solid #aaa;
+	font-size: 1.1em;
+	margin: 10px;
+	margin-bottom: 0px;
 }
 .basic-card .details{
 	color:#ddd;
 	margin: 10px;
+}
+.basic-card .img{
+	padding: 5px 5px 0px 5px;
+	width: 100%;
+	overflow: hidden;	
+}
+.basic-card .img img{
+	width: 100%;	
 }
 .bg-red{
 	background-color: #aa3939;
@@ -162,6 +218,14 @@ button:hover, .btn:hover{
 	display: flex;
 	justify-content: all;
 }
+.noir-blanc{
+	background-color: white;
+	color: black;
+}
+label.noir-blanc{
+	margin: 3px;
+	padding: .5em 1em .5em 1em;
+}
 .semi-button, .semi-button:visited{
 	padding-top: 1em;
 	padding-bottom: 1em;
@@ -176,4 +240,39 @@ button:hover, .btn:hover{
 
 .border-left{
 	border-left:1px solid #aaa;
+	border-radius: 0px 0px;
+}
+.border-right{
+	border-right:1px solid #aaa;
+	border-radius: 0px 0px;
+}
+.overlay{
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 0.5;
+}
+#panier{
+	position: fixed;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+}
+#panier.active{
+	visibility: visible;
+}
+.list{
+	position: absolute;
+	top:30%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	opacity: 1;
+}
+.header-panier{
+	font-size: 1.5em;
+	margin: 2px;
+	font-weight: bold;
 }
