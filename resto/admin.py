@@ -8,8 +8,8 @@ class PersonnelAdmin(admin.ModelAdmin):
 	ordering = ("user", "tel")
 
 class ProduitAdmin(admin.ModelAdmin):
-	list_display = ("nom", "unite", "unite_sortant")
-	list_filter = ("nom", "unite", "unite_sortant")
+	list_display = ("nom", "unite", "unite_sortant", "quantite")
+	list_filter = ("nom", "unite", "unite_sortant", "quantite")
 	search_field = ("nom", "unite", "unite_sortant")
 	ordering = ("nom", "unite", "unite_sortant")
 
@@ -20,10 +20,10 @@ class OffreAdmin(admin.ModelAdmin):
 	ordering = ('produit', 'fournisseur', "prix")
 
 class StockAdmin(admin.ModelAdmin):
-	list_display = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "is_valid")
-	list_filter = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "is_valid")
-	search_field = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "is_valid")
-	ordering = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "is_valid")
+	list_display = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "motif")
+	list_filter = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "motif")
+	search_field = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "motif")
+	ordering = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "motif")
 
 class FournisseurAdmin(admin.ModelAdmin):
 	list_display = ('nom', 'adresse', 'tel')
@@ -32,10 +32,10 @@ class FournisseurAdmin(admin.ModelAdmin):
 	ordering = ('nom', 'adresse', 'tel')
 
 class RecetteAdmin(admin.ModelAdmin):
-	list_display = ("nom", "image", "prix", "details")
-	list_filter = ("nom", "image", "prix", "details")
-	search_field = ("nom", "image", "prix", "details")
-	ordering = ("nom", "image", "prix", "details")
+	list_display = ("nom", "image", "details")
+	list_filter = ("nom", "image", "details")
+	search_field = ("nom", "image", "details")
+	ordering = ("nom", "image", "details")
 
 class CommandeAdmin(admin.ModelAdmin):
 	list_display = ("table", "tel", "date", "a_payer", "payee", "reste")
@@ -71,3 +71,4 @@ admin.site.register(Paiement, PaiementAdmin)
 admin.site.register(Offre, OffreAdmin)
 admin.site.register(Personnel, PersonnelAdmin)
 admin.site.register(Table)
+admin.site.register(PrixRecette)

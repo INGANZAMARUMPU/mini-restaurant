@@ -1,28 +1,42 @@
 {% extends "index.html" %}
+{% load static %}
 {% block content %}
-	<div class="centered">
-		<div class="recycler">
-			<a href="/admin/resto/offre" target="_blank" class="basic-card bg-red">
-				<div class="title"> Offre</div>
-				<div class="details">Gerer les offres</div>
-			</a>
-			<a href="/admin/resto/produit" target="_blank" class="basic-card bg-red">
-				<div class="title"> Produit</div>
-				<div class="details">Gerer les produits</div>
-			</a>
-			<a href="/admin/resto/fournisseur" target="_blank" class="basic-card bg-red">
-				<div class="title"> Fournisseur</div>
-				<div class="details">Gerer les fournisseurs</div>
-			</a>
-			{% for produit in produits %}
-			<div class="basic-card bg-blue">
-				<div class="title">{{ produit.nom }}</div>
-				<div class="buttons">
-					<a href class="semi-button">- Sortie</a>
-					<a href class="semi-button border-left">+ Entrée</a>
-				</div>
+<form class="search-form">
+	<input type="text" placeholder="Keyword" class="search-input" id="id_username">
+	<button type="reset">X</button>
+</form>
+<div class="centered">
+	<div class="recycler">
+		{% for produit in produits %}
+		<div class="basic-card bg-blue" data-id="{{ produit.id }}">
+			<div class="subtitle">
+				{{ produit.nom }} {{ produit.quantite }}{{produit.unite }}
 			</div>
-			{% endfor %}
+			<div class="buttons">
+				<a href="{% url 'stock_out' produit.id %}"  class="semi-button stock_action">- Sortie</a>
+				<a href="{% url 'stock_in' produit.id %}" class="semi-button border-left stock_action">+ Entrée</a>
+			</div>
 		</div>
+		{% endfor %}
+		<a href="/admin/resto/offre" target="_blank" class="basic-card bg-red">
+			<div class="title"> Offre</div>
+			<div class="details">Gerer les offres</div>
+		</a>
+		<a href="/admin/resto/produit" target="_blank" class="basic-card bg-red">
+			<div class="title"> Produit</div>
+			<div class="details">Gerer les produits</div>
+		</a>
+		<a href="/admin/resto/fournisseur" target="_blank" class="basic-card bg-red">
+			<div class="title"> Fournisseur</div>
+			<div class="details">Gerer les fournisseurs</div>
+		</a>
 	</div>
+</div>
+<div id="popup-form" class="popup">
+	<div class="overlay"></div>
+	<div class="popup-body">
+		<div id="form-content"></div>
+	</div>
+</div>
+<script src="{% static 'js/stock.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock content %}

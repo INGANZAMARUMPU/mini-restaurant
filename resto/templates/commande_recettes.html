@@ -12,13 +12,9 @@
 </form>
 <div class="centered">
 	<div class="recycler">
-		<a href="/admin/resto/recette/" target="_blank" class="basic-card bg-red">
-			<div class="title"> Recettes</div>
-			<div class="details">Gerer les recettes</div>
-		</a>
 		{% for recette in recettes %}
-		<div class="basic-card bg-blue">
-			<div class="img">
+		<div class="basic-card bg-blue recette" data-id={{ recette.id }}>
+			<div class="img food-img">
 				<img src="
 				{% if recette.image %}
 					{{ recette.image.url }}
@@ -27,57 +23,27 @@
 				{% endif %} 
 				"/>
 			</div>
-			<div class="subtitle">{{ recette.nom }}</div>
+			<div class="subtitle">
+				<span class="name">{{ recette.nom }}</span>
+				<span class="prix">{{ recette.prix }}</span>
+				Fbu
+			</div>
 			<div class="buttons">
-				<button class="left-button bg-blue">-</button>
-				<label class="noir-blanc">0</label>
-				<button class="right-button bg-blue">+</button>
-			</div>
-		</div>
-		<div class="basic-card bg-blue">
-			<div class="img">
-				<img src="
-				{% if recette.image %}
-					{{ recette.image.url }}
-				{% else %}
-					{% static 'img/ic_user.png' %}
-				{% endif %} 
-				"/>
-			</div>
-			<div class="subtitle">{{ recette.nom }}</div>
-			<div class="buttons">
-				<button class="left-button bg-blue">-</button>
-				<label class="noir-blanc">0</label>
-				<button class="right-button bg-blue">+</button>
-			</div>
-		</div>
-		<div class="basic-card bg-blue">
-			<div class="img">
-				<img src="
-				{% if recette.image %}
-					{{ recette.image.url }}
-				{% else %}
-					{% static 'img/ic_user.png' %}
-				{% endif %} 
-				"/>
-			</div>
-			<div class="subtitle">{{ recette.nom }}</div>
-			<div class="buttons">
-				<button class="left-button bg-blue">-</button>
-				<label class="noir-blanc">0</label>
-				<button class="right-button bg-blue">+</button>
+				<button class="left-button bg-blue recette_moins">-</button>
+				<label class="noir-blanc recette_qtt">0</label>
+				<button class="right-button bg-blue recette_plus">+</button>
 			</div>
 		</div>
 		{% endfor %}
 	</div>
 </div>
-<div id="panier">
+<div id="panier" class="popup">
 	<div class="overlay"></div>
-	<div class="list">
-		<table>
+	<div class="popup-body">
+		<table class="table">
 			<caption class="header-panier">Panier</caption>
 			<thead>
-				<tr class="panier-item">
+				<tr>
 					<th>Name</th>
 					<th>price</th>
 					<th>quantity</th>
@@ -85,17 +51,21 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="panier-item">
-					<td class="panier-name"></td>
-					<td class="panier-prix"></td>
-					<td class="panier-quantite"></td>
-					<td class="panier-total"></td>
-					<td><button>-</button></td>
-					<td><button>+</button></td>
-				</tr>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td>total</td>
+					<td></td>
+					<td></td>
+					<td id="total"></td>
+				</tr>
+			</tfoot>
 		</table>
+		<div class="btns-valider">
+			<button style="margin-right:3px">valider</button>
+			<button>valider et imprimer</button>
+		</div>
 	</div>
 </div>
-<script src="{% static 'js/panier.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+<script src="{% static 'js/panier.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock content %}

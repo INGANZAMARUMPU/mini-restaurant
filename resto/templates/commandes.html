@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+<!-- <H3 class="title">Tout les commandes</H3> -->
+<div class="centered">
+<table class="table">
+	<caption class="header-panier">Toute le Commandes</caption>
+	<thead>
+		<tr class="panier-item">
+			<th>id</th>
+			<th>table</th>
+			<th>serveur</th>
+			<th>somme</th>
+			<th>payée</th>
+			<th>Reste</th>
+			<th>Date</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for commande in commandes %}
+		<tr class="commande-item">
+			<td class="commande-id">{{ commande.id }}</td>
+			<td class="commande-table">{{ commande.table }}</td>
+			<td class="commande-serveur">{{ commande.serveur }}</td>
+			<td class="commande-somme">{{ commande.a_payer }}</td>
+			<td class="commande-payee">{{ commande.payee }}</td>
+			<td class="commande-reste">{{ commande.reste }}</td>
+			<td class="commande-date">{{ commande.date }}</td>
+			<td><button>détails</button></td>
+			<td><button>imprimer</button></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+{% endblock content %}

@@ -35,6 +35,38 @@ class PersonnelView(View, LoginRequiredMixin):
 		serveurs = User.objects.all()
 		return render(request, self.template_name, locals())
 
+class CommandeMgtView(View, LoginRequiredMixin):
+	template_name = "commandes.html"
+
+	def get(self, request, *args, **kwargs):
+		commandes = Commande.objects.all()
+		return render(request, self.template_name, locals())
+
+class StockInView(View):
+	template_name = "forms.html"
+
+	def get(self, request, id_produit,*args, **kwargs):
+		form = InStockForm(id_produit)
+		return render(request, self.template_name, locals())
+
+	def post(self, request, id_produit, *args, **kwargs):
+		form = InStockForm(id_produit, request.POST)
+		return render(request, self.template_name, locals())
+
+class StockOutView(View):
+	template_name = "forms.html"
+
+	def get(self, request, id_produit, *args, **kwargs):
+		form = OutStockForm()
+		print("====================")
+		print(form)
+		print(request)
+		return render(request, self.template_name, locals())
+
+	def post(self, request, id_produit, *args, **kwargs):
+		form = OutStockForm(request.POST)
+		return render(request, self.template_name, locals())
+
 class CommandeView(View, LoginRequiredMixin):
 	template_name = "commande_serveurs.html"
 
