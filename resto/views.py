@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+import json
 
 from .forms import *
 from .models import *
@@ -51,6 +54,11 @@ class StockInView(View):
 
 	def post(self, request, id_produit, *args, **kwargs):
 		form = InStockForm(id_produit, request.POST)
+		if(form.is_valid):
+			data = form.save(commit=False)
+			produit = Produit.objects.get(id = id_produit)
+			Stock(produit=produit, quantite=data.quantite,\
+				offre=data.offre, expiration=data.expiration).save()
 		return render(request, self.template_name, locals())
 
 class StockOutView(View):
@@ -58,13 +66,16 @@ class StockOutView(View):
 
 	def get(self, request, id_produit, *args, **kwargs):
 		form = OutStockForm()
-		print("====================")
-		print(form)
-		print(request)
 		return render(request, self.template_name, locals())
 
 	def post(self, request, id_produit, *args, **kwargs):
+		import math
 		form = OutStockForm(request.POST)
+		if(form.is_valid):
+			data = form.save(commit=False)
+			produit = Produit.objects.get(id = id_produit)
+			Stock(produit=produit, motif = data.motif,\
+				quantite=-math.sqrt(float(data.quantite)**2)).save()
 		return render(request, self.template_name, locals())
 
 class CommandeView(View, LoginRequiredMixin):
@@ -82,6 +93,17 @@ class CommandeView(View, LoginRequiredMixin):
 		else:
 			commandes = Commande.objects.all()
 			return render(request, self.template_name, locals())
+
+	def post(self, request, id_table, id_serveur, *args, **kwargs):
+		commande = Commande.objects.get_or_create(table=id_table,\
+	 		serveur=id_serveur, a_payer=0)[0]
+		for id_recette, details in json.loads(request.body).items():
+			print(id_recette, details)
+			recette = Recette.objects.get(id=id_recette)
+			DetailCommande(recette=recette, commande=commande,\
+				quantite=details["quantite"]).save()
+		return JsonResponse({"message":"good"})
+		
 
 def disconnect(request):
 	show_hidden = "hidden"

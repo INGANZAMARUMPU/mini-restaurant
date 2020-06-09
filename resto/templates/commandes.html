@@ -14,6 +14,7 @@
 			<th>payée</th>
 			<th>Reste</th>
 			<th>Date</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -26,8 +27,10 @@
 			<td class="commande-payee">{{ commande.payee }}</td>
 			<td class="commande-reste">{{ commande.reste }}</td>
 			<td class="commande-date">{{ commande.date }}</td>
-			<td><button>détails</button></td>
-			<td><button>imprimer</button></td>
+			<td>
+				<button id="commande_details">détails</button>
+				<button id="commande_payer">payer</button>
+			</td>
 		</tr>
 		{% endfor %}
 	</tbody>

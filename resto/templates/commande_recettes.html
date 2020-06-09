@@ -62,10 +62,11 @@
 			</tfoot>
 		</table>
 		<div class="btns-valider">
-			<button style="margin-right:3px">valider</button>
-			<button>valider et imprimer</button>
+			<button style="margin-right:3px" id="valider-panier">valider</button>
+			<button id="valider-imprimer-panier">valider et imprimer</button>
 		</div>
 	</div>
 </div>
+<script src="{% static 'js/jquery.cookie.min.js' %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static 'js/panier.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock content %}

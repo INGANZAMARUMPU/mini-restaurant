@@ -22,10 +22,6 @@ class StockViewset(viewsets.ModelViewSet):
 		url_path=r'quantite/(?P<produit_id>[0-9]+)',
 		url_name="quantite_total")
 	def quantiteTotal(self, request, produit_id):
-		# stocks = Stock.objects.filter(produit=self,
-		# 	quantite__gt=0, 
-		# 	expiration_date__gt=datetime.now())
-		# quantite = stocks.aggregate(Sum('quantite'))['quantite__sum']
 		produit = Produit.objects.get(id=produit_id)
 		return Response({'quantite':produit.quantiteEnStock()})
 

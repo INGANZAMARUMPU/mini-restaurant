@@ -102,18 +102,19 @@ class PrixRecette(models.Model):
 	date = models.DateTimeField(default=timezone.now)
 	
 	def __str__(self):
-		return f"{self.nom.recette} à {self.prix}"
+		return f"{self.recette.nom} à {self.prix}"
 
 class DetailCommande(models.Model):
 	commande = models.ForeignKey("Commande", null=True, on_delete=models.CASCADE, related_name='details')
 	recette = models.ForeignKey("Recette", null=True, on_delete=models.SET_NULL)
 	quantite = models.PositiveIntegerField(default=1)
-	somme = models.PositiveIntegerField(blank=True, verbose_name='à payer')
+	somme = models.PositiveIntegerField(editable=False, blank=True, verbose_name='à payer')
 	date = models.DateTimeField(default=timezone.now)
 
 	def save(self, *args, **kwargs):
-		self.somme = self.recette.prix*self.quantite
+		self.somme = self.recette.prix()*self.quantite
 		super(DetailCommande, self).save(*args, **kwargs)
+		self.updateCommande()
 
 	class Meta:
 		unique_together = ('commande','recette')
@@ -121,6 +122,12 @@ class DetailCommande(models.Model):
 			
 	def __str__(self):
 		return f"{self.recette}"
+
+	def updateCommande(self):
+		commande = self.commande
+		commande.a_payer += self.somme
+		commande.save()
+
 
 class Commande(models.Model):
 	table = models.ForeignKey(Table, default=1, on_delete=models.SET_DEFAULT)

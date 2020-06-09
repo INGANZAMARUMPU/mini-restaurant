@@ -22,6 +22,10 @@ $("#panier").on('click', '.panier_plus', function(event) {
 	prix = parseInt($item.find(".panier-prix").text());
 	$quantite.text(quantite);
 	$total.text(quantite*prix);
+
+	$recette_qtt.text(recette_qtt);
+	panier[$item.attr('data-id')].quantite=quantite;
+
 	calculateTotal();
 });
 
@@ -35,10 +39,33 @@ $("#panier").on('click', '.panier_moins', function(event) {
 		prix = parseInt($item.find(".panier-prix").text());
 		$quantite.text(quantite);
 		$total.text(quantite*prix);
+		panier[$item.attr('data-id')].quantite=quantite;
 	}else{
 		$item.remove();
+		delete(panier[$item.attr('data-id')]);
 	}
 	calculateTotal();
+});
+
+$("#valider-panier").on('click', function(event) {
+	if(!$.isEmptyObject(panier)){
+		$.ajax({
+			url: window.location.pathname,
+			type: 'POST',
+			dataType: 'json',
+			headers : {"X-CSRFToken":$.cookie("csrftoken")},
+			data: JSON.stringify(panier),
+		})
+		.done(function() {
+			console.log("success");
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+	}
 });
 
 $("#toggle-panier").on('click', function(event) {
@@ -46,8 +73,8 @@ $("#toggle-panier").on('click', function(event) {
 	$panier = $("#panier");
 	if(!($panier.hasClass('active'))){
 		$panier.find('tbody').empty();
-		for(var [name, item] of  Object.entries(panier)){
-			$panier.find('tbody').append(templatePanier(item.id, name,item.prix,item.quantite));
+		for(var [id, item] of  Object.entries(panier)){
+			$panier.find('tbody').append(templatePanier(id, item.name,item.prix,item.quantite));
 		}
 		$panier.addClass('active');
 	}
@@ -68,9 +95,9 @@ $recette_plus.on('click', function(event) {
 	recette_id = $recette.attr('data-id');
 	recette_name = $recette.find(".name").text();
 	recette_prix = $recette.find(".prix").text();
-	item = {"id":recette_id, "quantite":recette_qtt, "prix":recette_prix};
+	item = {"name":recette_name, "quantite":recette_qtt, "prix":recette_prix};
 	$recette_qtt.text(recette_qtt);
-	panier[recette_name] = item;
+	panier[recette_id] = item;
 });
 
 $recette_moins.on('click', function(event) {
@@ -81,14 +108,14 @@ $recette_moins.on('click', function(event) {
 		recette_id = $recette.attr('data-id');
 		recette_name = $recette.find(".name").text();
 		recette_prix = $recette.find(".prix").text();
-		item = {"id":recette_id, "quantite":recette_qtt, "prix":recette_prix};
+		item = {"name":recette_name, "quantite":recette_qtt, "prix":recette_prix};
 		
 		$recette_qtt.text(recette_qtt);
-		panier[recette_name] = item;
+		panier[recette_id] = item;
 	}else{
 		$recette_qtt.text(0);
 		recette_name = $recette.find(".name").text();
-		delete(panier[recette_name]);
+		delete(panier[recette_id]);
 	}
 });
 

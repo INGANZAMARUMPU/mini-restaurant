@@ -8,7 +8,7 @@
 <div class="centered">
 	<div class="recycler">
 		{% for produit in produits %}
-		<div class="basic-card bg-blue" data-id="{{ produit.id }}">
+		<div class="basic-card bg-blue produit-item" data-id="{{ produit.id }}">
 			<div class="subtitle">
 				{{ produit.nom }} {{ produit.quantite }}{{produit.unite }}
 			</div>
