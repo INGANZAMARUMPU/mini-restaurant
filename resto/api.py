@@ -2,6 +2,9 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from django.db.models import Count
 
 from .models import *
 from .serializers import *
@@ -42,3 +45,25 @@ class CommandeViewset(viewsets.ModelViewSet):
 	permission_classes = [IsAuthenticated]
 	queryset = Commande.objects.all()
 	serializer_class = CommandeSerializer
+
+class ChartRecetteViewset(viewsets.ViewSet):
+	authentication_classes = [SessionAuthentication]
+	permission_classes = [IsAuthenticated]
+
+	@action(methods=['GET'], detail=False, url_path=r'detail',url_name="detail")
+	def menuDetail(self, request):
+		details = DetailCommande.objects.values('recette__nom').\
+			order_by('recette').annotate(total=Sum('quantite'))
+		# serializer = DetailCommandeSerializer(details, many=True)
+		return Response(details)
+
+class ChartPersonnelViewset(viewsets.ViewSet):
+	authentication_classes = [SessionAuthentication]
+	permission_classes = [IsAuthenticated]
+
+	@action(methods=['GET'], detail=False, url_path=r'service',url_name="service")
+	def menuDetail(self, request):
+		details = Commande.objects.values('serveur', 'serveur__username').\
+			order_by('serveur').annotate(commandes=Count('id', distinct=True))
+		# serializer = DetailCommandeSerializer(details, many=True)
+		return Response(details)

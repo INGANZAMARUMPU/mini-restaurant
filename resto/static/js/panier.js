@@ -56,7 +56,32 @@ $("#valider-panier").on('click', function(event) {
 			headers : {"X-CSRFToken":$.cookie("csrftoken")},
 			data: JSON.stringify(panier),
 		})
-		.done(function() {
+		.done(function(data) {
+			console.log(data);
+			console.log("success");
+			window.location=window.location;
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+	}
+});
+
+$("#valider_imprimer").on('click', function(event) {
+	if(!$.isEmptyObject(panier)){
+		$.ajax({
+			url: window.location.pathname,
+			type: 'POST',
+			dataType: 'json',
+			headers : {"X-CSRFToken":$.cookie("csrftoken")},
+			data: JSON.stringify(panier),
+		})
+		.done(function(data) {
+			console.log(data);
+			templateFacture(data);
 			console.log("success");
 		})
 		.fail(function() {
@@ -126,4 +151,80 @@ function calculateTotal(){
 		total += parseInt($(panier_item).find('.panier-total').text());
 	}
 	$("#total").text(total)
+}
+ function templateFacture(facture){
+ 	str_lignes_facture=`
+<html>
+<body>
+<table style="max-width:280px;">
+<tbody>
+<tr>
+<td>
+<!--<p>{{ logo }}</p>-->
+<p><img scr="`+window.location.origin+`/static/img/fidodido.png" />
+</p>
+</td>
+</tr>
+<tr>
+<td>
+Facture no. `+facture.id+" "+facture.date+`<br>
+Serveur: <b>`+facture.serveur+`</b><br></br>
+RC 013456572</br></br>
+Chaussée PL Rwagasore</br>
+Rohero 1 Quartier INSS</br>
+</td>
+</tr>
+<tr>
+<td><b>`+facture.table+`</b></td>
+</tr>
+<tr>
+<td>
+<table>
+<tbody>
+<tr>
+<th>Article</th>
+<th>P.U.</th>
+<th>Qt.</th>
+<th>Total</th>
+</tr>`
+ 	for(var item of facture.factures){
+		str_lignes_facture += `<tr>
+			<td>`+item.name+`</td>
+			<td>`+item.prix+`</td>
+			<td> x `+item.quantite+`</td>
+			<td>&nbsp;`+item.total+`</td>
+		</tr>`
+	}
+	str_lignes_facture +=`
+<tr>
+<th>Total</th>
+<th>&nbsp;</th>
+<th>&nbsp;</th>
+<th><b>`+facture.total+`</b></th>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td>Caissier `+facture.caissier+`</td>
+</tr>
+<tr>
+<br>
+<td style="text-align: center;"><strong>Merci</strong></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+`;
+	printDiv(str_lignes_facture);
+ }
+
+function printDiv(str_facture) { 
+	var a = window.open('', '', 'height=500, width=1000'); 
+	a.document.write(str_facture); 
+	a.document.close(); 
+	a.print();
+    a.close();
 }

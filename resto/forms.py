@@ -31,11 +31,26 @@ class InStockForm(forms.ModelForm):
 		fields = ("offre", "quantite", "expiration")
 
 	def __init__(self, produit_id, *args, **kwargs):
-		super(InStockForm, self).__init__(*args, **kwargs)
 		self.base_fields["offre"].queryset = Offre.objects.filter(produit=produit_id)
+		super(InStockForm, self).__init__(*args, **kwargs)
 
 MOTIF_CHOICES = ( 
-    ("vers_stock", "vers stock"), 
+    ("vers_cuisine", "vers cuisine"), 
+    ("perime", "perimé"),
+)
+
+class PayForm(forms.ModelForm):
+	payee = forms.IntegerField(
+		widget=forms.NumberInput(
+			attrs={'placeholder':'la somme payée','class':'input', 'id':"saisies"}),
+		label='la somme payée'
+		)
+	class Meta:
+		model = Commande
+		fields = ("payee",)
+
+MOTIF_CHOICES = ( 
+    ("vers_cuisine", "vers cuisine"), 
     ("perime", "perimé"),
 )
 

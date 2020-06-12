@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cool Restaurant</title>
+    <link href="{% static "css/style.css" %}" rel="stylesheet" />
+    <script src="{% static "js/jquery.min.js" %}" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="modal-form">
+	{% if commande.reste %}
+		<form action="{% url 'payer_commande' id_commande %}" method="post" >
+		{% csrf_token %}
+		la somme à payer est <b><span id="a-payer">{{ commande.a_payer|default:0 }}</span></b>
+		{{ form.as_p }}
+    	la somme à rendre est <b><span id="a-rendre">0</span></b>
+    	<input type="submit" name="submit" value="submit" class="btn right">
+    	<script type="text/javascript">
+    		$apayer = $("#a-payer");
+    		$arendre = $("#a-rendre");
+    		$saisies = $("#saisies");
+    		$saisies.keyup(function(event) {
+    			saisies = parseFloat($saisies.val());
+    			apayer = parseFloat($apayer.text());
+    			$arendre.text(saisies-apayer);
+    		});
+    	</script>
+	</form>
+	{% else %}
+		Toute est réglé
+	{% endif %}
+</div>
+</body>
+</html>

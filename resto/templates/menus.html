@@ -3,16 +3,11 @@
 {% block content %}
 <H3 class="title">MENU CHARTS</H3>
 <div class="centered">
-	<div class="recycler">
-		<a href="/admin/resto/recette" target="_blank" class="basic-card bg-red">
-			<div class="title">Menus</div>
-			<div class="details">Gerer les menus</div>
-		</a>
-	</div>
 </div>
-<div>
-	<canvas id="chartMenus"></canvas>
+<div style="display: block;width: 400px;height: 400px; background-color:white">
+	<canvas id="chartMenus" width="400" height="400"></canvas>
 </div>
-<script src="{% static "js/Chart.min.js" %}" crossorigin="anonymous"></script>
+<script src="{% static "js/Chart.min.js" %}"></script>
+<script src="{% static "js/chart.menu.js" %}"></script>
 
 {% endblock content %}

@@ -38,7 +38,6 @@
 	</div>
 </div>
 <div id="panier" class="popup">
-	<div class="overlay"></div>
 	<div class="popup-body">
 		<table class="table">
 			<caption class="header-panier">Panier</caption>
@@ -50,7 +49,7 @@
 					<th>total</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class=".popup-content">
 			</tbody>
 			<tfoot>
 				<tr>
@@ -63,10 +62,14 @@
 		</table>
 		<div class="btns-valider">
 			<button style="margin-right:3px" id="valider-panier">valider</button>
-			<button id="valider-imprimer-panier">valider et imprimer</button>
+			<button id="valider_imprimer">valider et imprimer</button>
 		</div>
 	</div>
 </div>
 <script src="{% static 'js/jquery.cookie.min.js' %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static 'js/panier.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/base.js' %}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	search('search-form', 'basic-card');
+</script>
 {% endblock content %}

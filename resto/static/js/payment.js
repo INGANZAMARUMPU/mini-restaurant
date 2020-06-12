@@ -1,18 +1,15 @@
-$(".stock_action").on('click', function(event) {
+$(".payer_commande").on('click', function(event) {
 	event.preventDefault();
 	$popup_form = $("#popup-form");
-	// actualiser = window.location;
-	stock_id = $(this).parents('.produit-item').attr('data-id');
 	url = $(this).attr('href');
 	form_content = $("#form-content");
 	$.ajax({
-		url: url,
-		dataType: "html",
+		url: url
 	})
 	.done(function(data) {
 		$(form_content).html(data);
 		$popup_form.addClass('active');
-		$(form_content).on("submit", "#modal-form", function (e) {
+		$(form_content).on("submit", "form", function (e) {
 			e.preventDefault();
 			e.stopPropagation()
 			$.ajax({
@@ -29,8 +26,7 @@ $(".stock_action").on('click', function(event) {
 			})
 			.always(function() {
 			});
-			
-		}); 
+		});
 	})
 	.fail(function() {
 		console.log("error");
@@ -39,7 +35,6 @@ $(".stock_action").on('click', function(event) {
 		console.log("complete");
 	});
 });
-
 
 $(".overlay").on('click', function(event) {
 	event.preventDefault();

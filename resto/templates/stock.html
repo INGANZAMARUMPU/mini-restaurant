@@ -1,6 +1,7 @@
 {% extends "index.html" %}
 {% load static %}
 {% block content %}
+
 <form class="search-form">
 	<input type="text" placeholder="Keyword" class="search-input" id="id_username">
 	<button type="reset">X</button>
@@ -18,18 +19,6 @@
 			</div>
 		</div>
 		{% endfor %}
-		<a href="/admin/resto/offre" target="_blank" class="basic-card bg-red">
-			<div class="title"> Offre</div>
-			<div class="details">Gerer les offres</div>
-		</a>
-		<a href="/admin/resto/produit" target="_blank" class="basic-card bg-red">
-			<div class="title"> Produit</div>
-			<div class="details">Gerer les produits</div>
-		</a>
-		<a href="/admin/resto/fournisseur" target="_blank" class="basic-card bg-red">
-			<div class="title"> Fournisseur</div>
-			<div class="details">Gerer les fournisseurs</div>
-		</a>
 	</div>
 </div>
 <div id="popup-form" class="popup">
@@ -39,4 +28,8 @@
 	</div>
 </div>
 <script src="{% static 'js/stock.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/base.js' %}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	search('search-form', 'basic-card');
+</script>
 {% endblock content %}

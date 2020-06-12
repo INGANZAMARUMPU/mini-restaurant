@@ -54,7 +54,8 @@ class Stock(models.Model):
 		self.calculateProxy()
 
 	def calculateProxy(self):
-		self.produit.quantite = self.produit.quantite+self.quantite
+		somme = Stock.objects.filter(produit=self.produit).aggregate(somme=Sum('quantite'))
+		self.produit.quantite = somme['somme']
 		self.produit.save()
 
 	class Meta:
@@ -66,7 +67,10 @@ class Offre(models.Model):
 	prix = models.FloatField()
 
 	def __str__(self):
-		return f"{self.fournisseur} - {self.prix} - {self.produit.nom}"
+		try:
+			return f"{self.fournisseur} - {self.prix} - {self.produit.nom}"
+		except:
+			return ""
 
 	class Meta:
 		unique_together = ('produit', 'fournisseur', 'prix')
