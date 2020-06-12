@@ -137,7 +137,14 @@ class CommandeView(LoginRequiredMixin, View):
 		facture["total"] = commande.a_payer
 		print(facture)
 		return JsonResponse(facture)
-		
+
+class DetailCommandeView(LoginRequiredMixin, View):
+	template_name = "details_commande.html"
+
+	def get(self, request, id_commande, *args, **kwargs):
+		commande = Commande.objects.get(id=id_commande)
+		details = DetailCommande.objects.filter(commande=commande)
+		return render(request, self.template_name, locals())	
 
 def disconnect(request):
 	show_hidden = "hidden"

@@ -14,20 +14,18 @@
 				{{ produit.nom }} {{ produit.quantite }}{{produit.unite }}
 			</div>
 			<div class="buttons">
-				<a href="{% url 'stock_out' produit.id %}"  class="semi-button stock_action">- Sortie</a>
-				<a href="{% url 'stock_in' produit.id %}" class="semi-button border-left stock_action">+ Entrée</a>
+				<a href="{% url 'stock_out' produit.id %}"  class="semi-button url_button">- Sortie</a>
+				<a href="{% url 'stock_in' produit.id %}" class="semi-button border-left url_button">+ Entrée</a>
 			</div>
 		</div>
 		{% endfor %}
 	</div>
 </div>
 <div id="popup-form" class="popup">
-	<div class="overlay"></div>
 	<div class="popup-body">
 		<div id="form-content"></div>
 	</div>
 </div>
-<script src="{% static 'js/stock.js' %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static 'js/base.js' %}" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	search('search-form', 'basic-card');

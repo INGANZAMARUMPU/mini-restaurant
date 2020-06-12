@@ -1,16 +1,13 @@
 {% extends "index.html" %}
 {% load static %}
 {% block content %}
-<!-- <H3 class="title">Tout les commandes</H3> -->
+<h3 class="header-panier">Toute le Commandes</h3>
+<form class="search-form">
+	<input type="text" placeholder="Keyword" class="search-input" id="id_username">
+	<button type="reset">X</button>
+</form>
 <div class="centered">
-<table class="table">
-	<caption class="header-panier">
-		Toute le Commandes
-		<form class="search-form">
-			<input type="text" placeholder="Keyword" class="search-input" id="id_username">
-			<button type="reset">X</button>
-		</form>
-	</caption>
+<table class="table commandes">
 	<thead>
 		<tr class="panier-item">
 			<th>id</th>
@@ -34,8 +31,8 @@
 			<td class="commande-reste">{{ commande.reste }}</td>
 			<td class="commande-date">{{ commande.date }}</td>
 			<td>
-				<a class="btn" id="commande_details">détails</a>
-				<a href="{% url 'payer_commande' commande.id %}" class="btn payer_commande">payer</a>
+				<a href="{% url 'details' commande.id %}" class="btn url_button" id="commande_details">détails</a>
+				<a href="{% url 'payer_commande' commande.id %}" class="btn url_button">payer</a>
 			</td>
 		</tr>
 		{% endfor %}
@@ -48,7 +45,6 @@
 		<div id="form-content"></div>
 	</div>
 </div>
-<script src="{% static 'js/payment.js' %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static 'js/base.js' %}" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	search('search-form', 'commande-item');

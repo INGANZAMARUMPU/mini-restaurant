@@ -9,7 +9,7 @@
 <body>
 <div id="modal-form">
 	{% if commande.reste %}
-		<form action="{% url 'payer_commande' id_commande %}" method="post" >
+	<form action="{% url 'payer_commande' id_commande %}" method="post" >
 		{% csrf_token %}
 		la somme à payer est <b><span id="a-payer">{{ commande.a_payer|default:0 }}</span></b>
 		{{ form.as_p }}

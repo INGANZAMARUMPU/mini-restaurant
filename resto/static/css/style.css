@@ -200,6 +200,7 @@ li{
 	justify-content : center;
 	flex-direction: column;
 	align-content: center;
+	padding: 20px;
 }
 .recycler{
 	display: flex;
@@ -271,6 +272,12 @@ label.noir-blanc{
 	margin: 3px;
 	padding: .5em 1em .5em 1em;
 }
+.chart-parent{
+	position: relative;
+	left: 50%;
+	background-color:white;
+	transform: translate(-50%, 0);
+}
 .semi-button, .semi-button:visited{
 	padding-top: .5em;
 	padding-bottom: .5em;
@@ -278,7 +285,6 @@ label.noir-blanc{
 	width: 50%;
 	text-align: center;
 }
-
 .semi-button:hover{
 	background-color:blue;
 }
@@ -318,15 +324,19 @@ label.noir-blanc{
 	font-size: 1.5em;
 	margin: 2px;
 	font-weight: bold;
+	text-align:  center;
 }
 .table {
-  border-collapse: collapse;
-  width: 100%;
-  padding: 20px;
+	border-collapse: collapse;
+	width: 100%;
+	padding: 20px;
 }
 .table th, .table td {
-  border-bottom: 1px solid #aaa;
-  text-align: left;
+	border-bottom: 1px solid #aaa;
+	text-align: left;
+}
+tr th{
+	background-color: #f5f5f5;
 }
 .table button, .table .btn{
 	padding: 0 1em;

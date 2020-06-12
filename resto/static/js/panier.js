@@ -31,6 +31,7 @@ $("#panier").on('click', '.panier_plus', function(event) {
 
 $("#panier").on('click', '.panier_moins', function(event) {
 	event.preventDefault();
+	event.stopPropagation();
 	$item = $(this).parents(".panier-item");
 	$quantite = $item.find(".panier-quantite");
 	quantite = parseInt($quantite.text())-1;
@@ -105,10 +106,6 @@ $("#toggle-panier").on('click', function(event) {
 	}
 	calculateTotal();
 });
-$(".overlay").on('click', function(event) {
-	event.preventDefault();
-	$("#panier").toggleClass("active");
-});
 
 $recette_plus = $(".recette_plus");
 $recette_moins = $(".recette_moins");
@@ -152,7 +149,8 @@ function calculateTotal(){
 	}
 	$("#total").text(total)
 }
- function templateFacture(facture){
+
+function templateFacture(facture){
  	str_lignes_facture=`
 <html>
 <body>

@@ -12,12 +12,22 @@ let randomColor = function (numbers) {
     };
     return colors;
 };
+function resizeChart(element, length){
+    $element = $("#"+element);
+    $div = $element.parent('div');
+    if(length<4){
+        size = length*200;
+    }else{
+        size = length*100;
+    }
+    $element.attr('width', size);
+    $div.css('width', size);
+}
 
-var ctx = document.getElementById('chartMenus').getContext('2d');
-
-function plot(){
+function plotBar(element, url){
+    var ctx = document.getElementById(element).getContext('2d');
     $.ajax({
-        url: '/api/chart_menus/detail/',
+        url: url,
         type: 'GET',
         dataType: 'json',
     })
@@ -25,16 +35,17 @@ function plot(){
         labels = []
         datas = []
         for(var item of data){
-            labels.push(item["recette__nom"]);
-            datas.push(item["total"]);
+            labels.push(item["labels"].slice(0,15));
+            datas.push(item["datas"]);
         }
+        resizeChart(element, labels.length);
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labels,
                 colors : randomColor(labels.length), // personnalization
                 datasets: [{
-                    label: '# of Votes',
+                    label: 'Qté consomée',
                     data: datas,
                     backgroundColor: colors.backgrounds,
                     borderColor: colors.borders,
@@ -59,4 +70,3 @@ function plot(){
         console.log("complete");
     });
 }
-plot();

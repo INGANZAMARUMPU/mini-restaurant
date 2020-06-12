@@ -132,7 +132,6 @@ class DetailCommande(models.Model):
 		commande.a_payer += self.somme
 		commande.save()
 
-
 class Commande(models.Model):
 	table = models.ForeignKey(Table, default=1, on_delete=models.SET_DEFAULT)
 	tel = models.CharField(verbose_name='numero de télephone', blank=True, default=0, max_length=24)
@@ -145,6 +144,9 @@ class Commande(models.Model):
 	def save(self, *args, **kwargs):
 		self.reste = self.a_payer-self.payee
 		super(Commande, self).save(*args, **kwargs)
+
+	class Meta:
+		ordering = ("-date", )
 
 	def paniers(self):
 		return Panier.objects.filter(commande=self)

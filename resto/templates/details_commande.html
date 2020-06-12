@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cool Restaurant</title>
+    <link href="{% static "css/style.css" %}" rel="stylesheet" />
+    <script src="{% static "js/jquery.min.js" %}" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="modal-form">
+	<table class="table">
+		<caption class="header-panier">Détail de la commande</caption>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>price</th>
+				<th>quantity</th>
+				<th>total</th>
+			</tr>
+		</thead>
+		<tbody class=".popup-content">
+		{% for detail in details %}
+			<tr class="panier-item" data-id="{{ detail.id }}">
+			<td class="panier-name">{{ detail.recette.nom }}</td>
+			<td class="panier-prix">{{ detail.recette.prix }}</td>
+			<td class="panier-quantite">{{ detail.quantite }}</td>
+			<td class="panier-total">{{ detail.somme }}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<td>total</td>
+				<td></td>
+				<td></td>
+				<td id="total">{{ commande.a_payer }}</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+</body>
+</html>
