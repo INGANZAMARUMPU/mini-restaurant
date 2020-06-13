@@ -17,6 +17,18 @@ class Personnel(models.Model):
 		string = string if string else self.user.username
 		return f"{string}"
 
+class Serveur(models.Model):
+	firstname = models.CharField(verbose_name='nom', max_length=24)
+	lastname = models.CharField(verbose_name='prenom', max_length=24)
+	avatar = models.ImageField(upload_to="avatars/", null=True, blank=True)
+	tel = models.CharField(verbose_name='numero de télephone', max_length=24)
+
+	class Meta:
+		unique_together = ('firstname', 'tel')
+
+	def __str__(self):
+		return f"{self.firstname} {self.lastname}"
+
 class Table(models.Model):
 	number = models.IntegerField()
 
@@ -139,14 +151,14 @@ class Commande(models.Model):
 	a_payer = models.FloatField(default=0, blank=True)
 	payee = models.FloatField(default=0, blank=True)
 	reste = models.FloatField(default=0, blank=True)
-	serveur = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+	serveur = models.ForeignKey(Serveur, blank=True, null=True, on_delete=models.SET_NULL)
 
 	def save(self, *args, **kwargs):
 		self.reste = self.a_payer-self.payee
 		super(Commande, self).save(*args, **kwargs)
 
 	class Meta:
-		ordering = ("-date", )
+		ordering = ("-id", )
 
 	def paniers(self):
 		return Panier.objects.filter(commande=self)

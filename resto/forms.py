@@ -36,6 +36,7 @@ class InStockForm(forms.ModelForm):
 
 MOTIF_CHOICES = ( 
     ("vers_cuisine", "vers cuisine"), 
+    ("vers_caisse", "vers caisse"), 
     ("perime", "perimé"),
 )
 
@@ -48,11 +49,6 @@ class PayForm(forms.ModelForm):
 	class Meta:
 		model = Commande
 		fields = ("payee",)
-
-MOTIF_CHOICES = ( 
-    ("vers_cuisine", "vers cuisine"), 
-    ("perime", "perimé"),
-)
 
 class OutStockForm(forms.ModelForm):
 	quantite = forms.IntegerField(

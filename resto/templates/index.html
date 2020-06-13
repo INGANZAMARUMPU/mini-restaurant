@@ -7,40 +7,40 @@
     <script src="{% static "js/jquery.min.js" %}" crossorigin="anonymous"></script>
 </head>
 <body>
-
+<div id="body">
+<ul class="floating-menu floating-right floating-top">
+	<li><a href="{% url 'logout' %}">logout</a></li>
+</ul>
 <ul class="top-menu"> <!--floating-right-center">-->
 	<li class="toggle-submenu">
 		<a href="/">Tables</a>
-		<div class="submenu">
-		   <a target="blank" href="/admin/resto/table">Gestion</a>
-		</div>
 	</li>
 	<li><a href="{% url 'commandes' %}">Commandes</a></li>
 	<li class="toggle-submenu">
 		<a href="{% url 'stock' %}">Stock</a>
+	</li>
+	<li class="toggle-submenu">
+		<a href="#">Courbes</a>
 		<div class="submenu">
+			<a href="{% url 'menus' %}">Menu</a>
+			<a href="{% url 'serveurs' %}">Serveurs</a>
+		</div>
+	</li>
+	<li class="toggle-submenu">
+		<a href="#">Gestion</a>
+		<div class="submenu">
+		   <a target="blank" href="/admin/resto/table">Tables</a>
+		   <a target="blank" href="/admin/resto/recette">Stock</a>
 		   <a target="blank" href="/admin/resto/produit">Produit</a>
 		   <a target="blank" href="/admin/resto/offre">Offre</a>
 		   <a target="blank" href="/admin/resto/fournisseur">Fournisseur</a>
-		</div>
-	</li>
-	<li class="toggle-submenu">
-		<a href="{% url 'menus' %}">Menu</a>
-		<div class="submenu">
-		   <a target="blank" href="/admin/resto/recette">Gestion</a>
-		</div>
-	</li>
-	<li class="toggle-submenu">
-		<a href="{% url 'personnel' %}">Personnel</a>
-		<div class="submenu">
-		   <a target="blank" href="/admin/resto/personnel">Gestion</a>
+		   <a target="blank" href="/admin/resto/serveurs">Serveur</a>
 		</div>
 	</li>
 </ul>
 {% block content %}
 <div class="content">
 	<div class="centered">
-		<H1 style="">WELCOME HOME</H1>
 		<div class="recycler">
 			{% for table in tables %}
 			<div class="basic-card bg-blue">
@@ -50,11 +50,29 @@
 					<a href class="semi-button border-left">Payer</a>
 				</div>
 			</div>
+			{% empty %}
+				<h3>Il y'a pas de tables</h3>
 			{% endfor %}
 		</div>
 	</div>
 </div>
 {% endblock content %}
+</div>
+{% block printable_facture %}
+<div id="printable" style="display:none;background:white">
+<table style="width:280px;">
+	<thead>
+		<tr>
+			<th>
+				<img src="{% static "img/fidodido.png" %}">
+			</th>
+		</tr>
+	</thead>
+	<tbody id="printable-body">
+	</tbody>
+</table>
+</div>
+{% endblock printable_facture %}
 <script src="{% static "js/base.js" %}" crossorigin="anonymous"></script>
 </body>
 </html>

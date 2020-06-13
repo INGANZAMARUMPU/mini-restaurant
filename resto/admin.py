@@ -7,6 +7,12 @@ class PersonnelAdmin(admin.ModelAdmin):
 	search_field = ("user", "tel")
 	ordering = ("user", "tel")
 
+class ServeurAdmin(admin.ModelAdmin):
+	list_display = ("firstname", "lastname", "tel", "avatar")
+	list_filter = ("firstname", "lastname", "tel")
+	search_field = ("firstname", "lastname", "tel")
+	ordering = ("firstname", "lastname", "tel")
+
 class ProduitAdmin(admin.ModelAdmin):
 	list_display = ("nom", "unite", "unite_sortant", "quantite")
 	list_filter = ("nom", "unite", "unite_sortant", "quantite")
@@ -70,5 +76,6 @@ admin.site.register(Commande, CommandeAdmin)
 admin.site.register(Paiement, PaiementAdmin)
 admin.site.register(Offre, OffreAdmin)
 admin.site.register(Personnel, PersonnelAdmin)
+admin.site.register(Serveur, ServeurAdmin)
 admin.site.register(Table)
 admin.site.register(PrixRecette)

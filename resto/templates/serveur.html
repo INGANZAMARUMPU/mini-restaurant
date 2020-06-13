@@ -5,11 +5,11 @@
 <div class="centered">
 </div>
 <div class="chart-parent">
-	<canvas id="chartPersonnel" width="400" height="400"></canvas>
+	<canvas id="chartServeurs" width="400" height="400"></canvas>
 </div>
 <script src="{% static "js/Chart.min.js" %}" crossorigin="anonymous"></script>
 <script src="{% static "js/chart_functions.js" %}"></script>
 <script type="text/javascript">
-	plotBar('chartPersonnel', '/api/chart_perso/service/');
+	plotBar('chartServeurs', '/api/chart_perso/service/');
 </script>
 {% endblock content %}

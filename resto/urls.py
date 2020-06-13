@@ -25,7 +25,7 @@ urlpatterns = [
 	path("commande/<id_table>", CommandeView.as_view(), name='commande_table'),
 	path("payer/<id_commande>", PayView.as_view(), name='payer_commande'),
 	path("commande/<id_table>/<id_serveur>", CommandeView.as_view(), name='commande_serveur'),
-	path("personnel", PersonnelView.as_view(), name='personnel'),
+	path("serveurs", ServeurView.as_view(), name='serveurs'),
 	path("login/", Connexion.as_view(), name='login'),
 	path("logout/", disconnect, name='logout'),
 ]

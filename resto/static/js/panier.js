@@ -81,8 +81,7 @@ $("#valider_imprimer").on('click', function(event) {
 			data: JSON.stringify(panier),
 		})
 		.done(function(data) {
-			console.log(data);
-			templateFacture(data);
+			printDiv(data);
 			console.log("success");
 		})
 		.fail(function() {
@@ -152,17 +151,6 @@ function calculateTotal(){
 
 function templateFacture(facture){
  	str_lignes_facture=`
-<html>
-<body>
-<table style="max-width:280px;">
-<tbody>
-<tr>
-<td>
-<!--<p>{{ logo }}</p>-->
-<p><img scr="`+window.location.origin+`/static/img/fidodido.png" />
-</p>
-</td>
-</tr>
 <tr>
 <td>
 Facture no. `+facture.id+" "+facture.date+`<br>
@@ -177,16 +165,17 @@ Rohero 1 Quartier INSS</br>
 </tr>
 <tr>
 <td>
-<table>
+<table style="width:100%;">
 <tbody>
 <tr>
-<th>Article</th>
-<th>P.U.</th>
-<th>Qt.</th>
-<th>Total</th>
-</tr>`
+<th style="text-align: left;">Article</th>
+<th style="text-align: left;">P.U.</th>
+<th style="text-align: left;">Qt.</th>
+<th style="text-align: left;">Total</th>
+</tr>`;
  	for(var item of facture.factures){
-		str_lignes_facture += `<tr>
+		str_lignes_facture += `
+		<tr>
 			<td>`+item.name+`</td>
 			<td>`+item.prix+`</td>
 			<td> x `+item.quantite+`</td>
@@ -195,10 +184,10 @@ Rohero 1 Quartier INSS</br>
 	}
 	str_lignes_facture +=`
 <tr>
-<th>Total</th>
-<th>&nbsp;</th>
-<th>&nbsp;</th>
-<th><b>`+facture.total+`</b></th>
+<th style="text-align: left;">Total</th>
+<th style="text-align: left;">&nbsp;</th>
+<th style="text-align: left;">&nbsp;</th>
+<th style="text-align: left;"><b>`+facture.total+`</b></th>
 </tr>
 </tbody>
 </table>
@@ -211,17 +200,16 @@ Rohero 1 Quartier INSS</br>
 <br>
 <td style="text-align: center;"><strong>Merci</strong></td>
 </tr>
-</tbody>
-</table>
-</body>
-</html>
 `;
-	printDiv(str_lignes_facture);
- }
+	return str_lignes_facture;
+}
 
-function printDiv(str_facture) { 
+function printDiv(object_facture) { 
+	str_facture = templateFacture(object_facture);
+	$("#printable-body").html(str_facture);
+
 	var a = window.open('', '', 'height=500, width=1000'); 
-	a.document.write(str_facture); 
+	a.document.write($("#printable").html()); 
 	a.document.close(); 
 	a.print();
     a.close();

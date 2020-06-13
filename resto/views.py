@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -36,7 +36,14 @@ class PersonnelView(LoginRequiredMixin, View):
 	template_name = "personnel.html"
 
 	def get(self, request, *args, **kwargs):
-		serveurs = User.objects.all()
+		personnel = User.objects.all()
+		return render(request, self.template_name, locals())
+
+class ServeurView(LoginRequiredMixin, View):
+	template_name = "serveur.html"
+
+	def get(self, request, *args, **kwargs):
+		serveurs = Serveur.objects.all()
 		return render(request, self.template_name, locals())
 
 class CommandeMgtView(LoginRequiredMixin, View):
@@ -107,7 +114,7 @@ class CommandeView(LoginRequiredMixin, View):
 			return render(request, "commande_recettes.html", locals())
 
 		elif id_table:
-			serveurs = Personnel.objects.all()
+			serveurs = Serveur.objects.all()
 			return render(request, "commande_serveurs.html", locals())
 
 		else:
@@ -116,11 +123,11 @@ class CommandeView(LoginRequiredMixin, View):
 
 	def post(self, request, id_table, id_serveur, *args, **kwargs):
 		table = Table.objects.get(id = id_table)
-		user = User.objects.get(id = id_serveur)
+		serveur = Serveur.objects.get(id = id_serveur)
 		commande = Commande.objects.get_or_create(table=table,\
-	 		serveur=user, a_payer=0)[0]
+	 		serveur=serveur, a_payer=0)[0]
 		facture = {}
-		facture["serveur"] = commande.serveur.first_name+" "+commande.serveur.last_name
+		facture["serveur"] = str(commande.serveur)
 		facture["id"] = commande.id
 		facture["date"] = commande.date
 		facture["table"] = str(commande.table)
@@ -135,7 +142,6 @@ class CommandeView(LoginRequiredMixin, View):
 			details["total"] = float(details["quantite"])*float(details["prix"])
 			facture["factures"].append(details)
 		facture["total"] = commande.a_payer
-		print(facture)
 		return JsonResponse(facture)
 
 class DetailCommandeView(LoginRequiredMixin, View):

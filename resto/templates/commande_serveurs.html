@@ -18,17 +18,15 @@
 				{% endif %}' alt="">
 			</div>
 			<div class="username">
-				<div><h3>{{ serveur.user.username }}</h3></div>
+				<div><h3>{{ serveur.tel }}</h3></div>
 				<div>
-					{% if serveur.user.first_name or serveur.user.last_name %}
-						{{ serveur.user.first_name }} {{ serveur.user.last_name }}
-					{% else %}
-						<span class="color-gray">no Firstname</span>
-					{% endif %}
+					{{ serveur.firstname }} {{ serveur.lastname }}
 				</div>
 			</div>
 		</div>
 		</a>
+		{% empty %}
+			<h3>Il y'a pas de serveurs</h3>
 		{% endfor %}
 	</div>
 </div>

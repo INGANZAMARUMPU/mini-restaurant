@@ -64,8 +64,8 @@ class ChartPersonnelViewset(viewsets.ViewSet):
 
 	@action(methods=['GET'], detail=False, url_path=r'service',url_name="service")
 	def menuDetail(self, request):
-		details = Commande.objects.values('serveur__username').\
+		details = Commande.objects.values('serveur').\
 			order_by('serveur').annotate(datas=Count('id', distinct=True),\
-				labels=F('serveur__username'))
+				labels=F('serveur__firstname'))
 		# serializer = DetailCommandeSerializer(details, many=True)
 		return Response(details)
