@@ -73,7 +73,7 @@ $(".url_button").off('click').on('click', function(event) {
 	});
 });
 
-$(".popup").on('click', function(event) {
+$(".popup").on('mousedown', function(event) {
 	if(!event.target.matches('.popup-body, .popup-body *')){
 		$(".popup").removeClass('active');
 	}

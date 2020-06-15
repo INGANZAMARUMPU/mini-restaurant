@@ -15,10 +15,18 @@ let randomColor = function (numbers) {
 function resizeChart(element, length){
     $element = $("#"+element);
     $div = $element.parent('div');
-    if(length<4){
-        size = length*200;
+    if(screen.width < 650){
+        if(length<4){
+            size = length*100;
+        }else{
+            size = length*50;
+        }
     }else{
-        size = length*100;
+        if(length<4){
+            size = length*200;
+        }else{
+            size = length*100;
+        }
     }
     $element.attr('width', size);
     $div.css('width', size);

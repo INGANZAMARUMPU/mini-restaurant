@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>Cool Restaurant</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{% static "css/style.css" %}" rel="stylesheet" />
     <script src="{% static "js/jquery.min.js" %}" crossorigin="anonymous"></script>
 </head>
@@ -16,6 +17,7 @@
 	<li class="toggle-submenu">
 		<a href="{% url 'stock' %}">Stock</a>
 	</li>
+	{% if user.is_staff %}
 	<li class="toggle-submenu">
 		<a href="#">Courbes</a>
 		<div class="submenu">
@@ -34,6 +36,7 @@
 		   <a target="blank" href="/admin/resto/serveur">Serveur</a>
 		</div>
 	</li>
+	{% endif %}
 </ul>
 {% block content %}
 <div class="content">

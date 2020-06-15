@@ -59,9 +59,14 @@ class CommandeMgtView(LoginRequiredMixin, View):
 	# def get(self, request, sdate=None, edate=None, *args, **kwargs):
 	def get(self, request, *args, **kwargs):
 		today = date.today()
-		sdate = today.replace(day = 1)
-		edate = today.replace(month=(today.month+1)%12, day=1) - timedelta(days=1)
-		commandes = Commande.objects.filter(date__gte=sdate, date__lte=edate)
+		# sdate = today.replace(day = 1)
+		# edate = today.replace(month=(today.month+1)%12, day=1) - timedelta(days=1)
+		if request.user.is_staff:
+			commandes = Commande.objects.all()
+		else:
+			tomorrow = today - timedelta(days=1)
+			print(today, tomorrow)
+			commandes = Commande.objects.filter(date__gte=tomorrow, date__lte=today)
 		return render(request, self.template_name, locals())
 
 class StockInView(LoginRequiredMixin, View):
