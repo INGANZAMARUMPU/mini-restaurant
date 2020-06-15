@@ -20,6 +20,7 @@ urlpatterns = [
 	path("stock/<id_produit>/in/", StockInView.as_view(), name='stock_in'),
 	path("stock/<id_produit>/out/", StockOutView.as_view(), name='stock_out'),
 	path("commandes", CommandeMgtView.as_view(), name='commandes'),
+	# path("commandes/<sdate>/<edate>", CommandeMgtView.as_view(), name='commandes'),
 	path("commandes/<id_table>", CommandeMgtView.as_view(), name='commandes'),
 	path("details/<id_commande>", DetailCommandeView.as_view(), name='details'),
 	path("commande/<id_table>", CommandeView.as_view(), name='commande_table'),

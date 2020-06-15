@@ -7,9 +7,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 
 import json
+from datetime import date, timedelta
 
 from .forms import *
 from .models import *
+
+def stringToDate(str_date:str)->datetime.date:
+	if str_date:
+		return datetime.datetime.strptime(str_date, "%d-%m-%Y").date()
+	else:
+		datetime.date.today()
 
 class Home(LoginRequiredMixin, View):
 	template_name = "index.html"
@@ -49,8 +56,12 @@ class ServeurView(LoginRequiredMixin, View):
 class CommandeMgtView(LoginRequiredMixin, View):
 	template_name = "commandes.html"
 
+	# def get(self, request, sdate=None, edate=None, *args, **kwargs):
 	def get(self, request, *args, **kwargs):
-		commandes = Commande.objects.all()
+		today = date.today()
+		sdate = today.replace(day = 1)
+		edate = today.replace(month=(today.month+1)%12, day=1) - timedelta(days=1)
+		commandes = Commande.objects.filter(date__gte=sdate, date__lte=edate)
 		return render(request, self.template_name, locals())
 
 class StockInView(LoginRequiredMixin, View):
@@ -58,7 +69,6 @@ class StockInView(LoginRequiredMixin, View):
 
 	def get(self, request, id_produit,*args, **kwargs):
 		form = InStockForm(id_produit)
-		print(form)
 		return render(request, self.template_name, locals())
 
 	def post(self, request, id_produit, *args, **kwargs):

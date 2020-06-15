@@ -10,6 +10,6 @@
 <script src="{% static "js/Chart.min.js" %}" crossorigin="anonymous"></script>
 <script src="{% static "js/chart_functions.js" %}"></script>
 <script type="text/javascript">
-	plotBar('chartServeurs', '/api/chart_perso/service/');
+	plotBar('chartServeurs', '/api/chart_perso/service/', 'nombre servi');
 </script>
 {% endblock content %}

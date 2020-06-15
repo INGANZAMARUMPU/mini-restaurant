@@ -24,7 +24,7 @@ function resizeChart(element, length){
     $div.css('width', size);
 }
 
-function plotBar(element, url){
+function plotBar(element, url, label){
     var ctx = document.getElementById(element).getContext('2d');
     $.ajax({
         url: url,
@@ -45,7 +45,7 @@ function plotBar(element, url){
                 labels: labels,
                 colors : randomColor(labels.length), // personnalization
                 datasets: [{
-                    label: 'Qté consomée',
+                    label: label,
                     data: datas,
                     backgroundColor: colors.backgrounds,
                     borderColor: colors.borders,

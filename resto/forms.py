@@ -25,7 +25,8 @@ class InStockForm(forms.ModelForm):
 	expiration = forms.IntegerField(
 		widget=forms.NumberInput(
 			attrs={'placeholder':'délais de validité(en jours)',
-					'class':'input'}))
+					'class':'input'}),
+		required=False);
 	class Meta:
 		model = Stock
 		fields = ("offre", "quantite", "expiration")

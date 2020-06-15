@@ -5,38 +5,50 @@
 	<input type="text" value="#" placeholder="Keyword" class="search-input" id="id_username">
 	<button type="reset">X</button>
 </form>
-<div class="centered">
-<table class="table commandes">
-	<thead>
-		<tr class="panier-item">
-			<th>id</th>
-			<th>table</th>
-			<th>serveur</th>
-			<th>somme</th>
-			<th>payée</th>
-			<th>Reste</th>
-			<th>Date</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for commande in commandes %}
-		<tr class="commande-item">
-			<td class="commande-id">#{{ commande.id }}</td>
-			<td class="commande-table">{{ commande.table }}</td>
-			<td class="commande-serveur">{{ commande.serveur }}</td>
-			<td class="commande-somme">{{ commande.a_payer }}</td>
-			<td class="commande-payee">{{ commande.payee }}</td>
-			<td class="commande-reste">{{ commande.reste }}</td>
-			<td class="commande-date">{{ commande.date }}</td>
-			<td>
-				<a href="{% url 'details' commande.id %}" class="btn url_button" id="commande_details">détails</a>
-				<a href="{% url 'payer_commande' commande.id %}" class="btn url_button">payer</a>
-			</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+<div class="scrollable-tab">
+	<table class="table commandes" style="min-width: 700px;">
+		<thead>
+			<tr class="panier-item">
+				<th>id</th>
+				<th>table</th>
+				<th>serveur</th>
+				<th>somme</th>
+				<th>payée</th>
+				<th>Reste</th>
+				<th>Date</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody id="commandes">
+			{% for commande in commandes %}
+			<tr class="commande-item">
+				<td class="commande-id">#{{ commande.id }}</td>
+				<td class="commande-table">{{ commande.table }}</td>
+				<td class="commande-serveur">{{ commande.serveur }}</td>
+				<td class="commande-somme">{{ commande.a_payer }}</td>
+				<td class="commande-payee">{{ commande.payee }}</td>
+				<td class="commande-reste">{{ commande.reste }}</td>
+				<td class="commande-date">{{ commande.date }}</td>
+				<td>
+					<div class="btns">
+						<a href="{% url 'details' commande.id %}" class="btn url_button" id="commande_details">détails</a>
+						<a href="{% url 'payer_commande' commande.id %}" class="btn url_button">payer</a>
+					</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr class="panier-item">
+				<th colspan="3">total</th>
+				<th id="commande-somme">0</th>
+				<th id="commande-payee">0</th>
+				<th id="commande-reste">0</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</tfoot>
+	</table>
 </div>
 <div id="popup-form" class="popup">
 	<div class="overlay"></div>
@@ -44,7 +56,13 @@
 		<div id="form-content"></div>
 	</div>
 </div>
+<style type="text/css" media="screen">
+	#body{
+		overflow: hidden;
+	}
+</style>
 <script src="{% static 'js/base.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/commandes.table.js' %}" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	search('search-form', 'commande-item');
 </script>

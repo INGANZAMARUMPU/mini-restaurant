@@ -7,6 +7,7 @@ $(".toggle-submenu").hover(function() {
 function search(search_widget, class_name){
 	search_widget = '.'+search_widget;
 	class_name = '.'+class_name;
+	dom_changed = false;
 	$text_field = $(search_widget).find('input');
 
 	$text_field.keyup(function(event) {
@@ -14,10 +15,20 @@ function search(search_widget, class_name){
 		for(var item of $(class_name)){
 			content = $(item).text().trim().toLowerCase();
 			if(content.includes(keyword)){
-		      $(item).show();
+				if($(item).is(':hidden')){
+					$(item).show();
+					dom_changed = true;
+				}
 		    }else{
-		      $(item).hide();
+				if($(item).is(':visible')){
+					$(item).hide();
+					dom_changed = true;
+				}
 		    }
+		}
+		if(dom_changed){
+			$(this).trigger('DOMChanged');
+			dom_changed = false;
 		}
 	});
 	$(search_widget).on('reset', function(event) {

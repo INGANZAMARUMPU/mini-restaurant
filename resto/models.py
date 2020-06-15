@@ -53,7 +53,7 @@ class Stock(models.Model):
 	offre = models.ForeignKey("Offre", blank=True, null=True, on_delete=models.SET_NULL)
 	quantite = models.FloatField()
 	date = models.DateField(blank=True, default=timezone.now)
-	expiration = models.PositiveIntegerField(null=True, blank=True, verbose_name="délais de validité(en jours)")
+	expiration = models.PositiveIntegerField(default=7, null=True, blank=True, verbose_name="délais de validité(en jours)")
 	expiration_date = models.DateField(editable=False, null=True)
 	personnel = models.ForeignKey("Personnel", null=True, on_delete=models.SET_NULL)
 	# is_valid = models.BooleanField(default=True)

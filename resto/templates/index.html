@@ -8,9 +8,6 @@
 </head>
 <body>
 <div id="body">
-<ul class="floating-menu floating-right floating-top">
-	<li><a href="{% url 'logout' %}">logout</a></li>
-</ul>
 <ul class="top-menu"> <!--floating-right-center">-->
 	<li class="toggle-submenu">
 		<a href="/">Tables</a>
@@ -34,7 +31,7 @@
 		   <a target="blank" href="/admin/resto/produit">Produit</a>
 		   <a target="blank" href="/admin/resto/offre">Offre</a>
 		   <a target="blank" href="/admin/resto/fournisseur">Fournisseur</a>
-		   <a target="blank" href="/admin/resto/serveurs">Serveur</a>
+		   <a target="blank" href="/admin/resto/serveur">Serveur</a>
 		</div>
 	</li>
 </ul>
@@ -58,6 +55,9 @@
 </div>
 {% endblock content %}
 </div>
+<ul class="floating-menu floating-right floating-top">
+	<li><a href="{% url 'logout' %}">logout</a></li>
+</ul>
 {% block printable_facture %}
 <div id="printable" style="display:none;background:white">
 <table style="width:280px;">

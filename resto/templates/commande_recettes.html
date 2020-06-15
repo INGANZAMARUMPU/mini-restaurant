@@ -1,11 +1,6 @@
 {% extends "index.html" %}
 {% load static %}
 {% block content %}
-
-<ul class="floating-menu floating-left floating-top">
-	<li><a href="#" id="toggle-panier">panier</a></li>
-</ul>
-
 <form class="search-form">
 	<input type="text" placeholder="Keyword" class="search-input" id="id_username">
 	<button type="reset">X</button>
@@ -39,7 +34,7 @@
 </div>
 <div id="panier" class="popup">
 	<div class="popup-body">
-		<table class="table">
+		<table class="table panier">
 			<caption class="header-panier">Panier</caption>
 			<thead>
 				<tr>
@@ -66,6 +61,9 @@
 		</div>
 	</div>
 </div>
+<ul class="floating-menu floating-left floating-top">
+	<li><a href="#" id="toggle-panier">panier</a></li>
+</ul>
 <script src="{% static 'js/jquery.cookie.min.js' %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static 'js/panier.js' %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static 'js/base.js' %}" type="text/javascript" charset="utf-8"></script>
