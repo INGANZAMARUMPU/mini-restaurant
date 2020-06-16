@@ -26,10 +26,13 @@ class OffreAdmin(admin.ModelAdmin):
 	ordering = ('produit', 'fournisseur', "prix")
 
 class StockAdmin(admin.ModelAdmin):
-	list_display = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "motif")
-	list_filter = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "motif")
-	search_field = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "motif")
-	ordering = ("produit", "quantite", "offre", "personnel", "date", "expiration_date", "motif")
+	list_display = ("produit", "quantite_initiale", "quantite_actuelle", "offre", "somme", "personnel", "date", "expiration_date")
+	list_filter = ("produit", "quantite_initiale", "quantite_actuelle", "offre", "personnel", "date", "expiration_date")
+	search_field = ("produit", "quantite_initiale", "quantite_actuelle", "offre", "personnel", "date", "expiration_date")
+	ordering = ("produit", "quantite_initiale", "quantite_actuelle", "offre", "personnel", "date", "expiration_date")
+
+	def somme(self, obj):
+		return obj.somme()
 
 class FournisseurAdmin(admin.ModelAdmin):
 	list_display = ('nom', 'adresse', 'tel')
@@ -79,3 +82,4 @@ admin.site.register(Personnel, PersonnelAdmin)
 admin.site.register(Serveur, ServeurAdmin)
 admin.site.register(Table)
 admin.site.register(PrixRecette)
+admin.site.register(DetailStock)
