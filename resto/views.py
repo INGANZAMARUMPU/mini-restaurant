@@ -65,7 +65,6 @@ class CommandeMgtView(LoginRequiredMixin, View):
 			commandes = Commande.objects.all()
 		else:
 			tomorrow = today - timedelta(days=1)
-			print(today, tomorrow)
 			commandes = Commande.objects.filter(date__gte=tomorrow, date__lte=today)
 		return render(request, self.template_name, locals())
 
@@ -79,10 +78,9 @@ class StockInView(LoginRequiredMixin, View):
 	def post(self, request, id_produit, *args, **kwargs):
 		form = InStockForm(id_produit, request.POST)
 		if(form.is_valid):
-			data = form.save(commit=False)
-			produit = Produit.objects.get(id = id_produit)
-			Stock(produit=produit, quantite=data.quantite,\
-				offre=data.offre, expiration=data.expiration).save()
+			stock = form.save(commit=False)
+			stock.produit=stock.offre.produit
+			stock.save()
 		return render(request, self.template_name, locals())
 
 class PayView(LoginRequiredMixin, View):
@@ -107,17 +105,13 @@ class StockOutView(LoginRequiredMixin, View):
 	template_name = "forms.html"
 
 	def get(self, request, id_produit, *args, **kwargs):
-		form = OutStockForm()
+		form = OutStockForm(id_produit)
 		return render(request, self.template_name, locals())
 
 	def post(self, request, id_produit, *args, **kwargs):
-		import math
-		form = OutStockForm(request.POST)
-		if(form.is_valid):
-			data = form.save(commit=False)
-			produit = Produit.objects.get(id = id_produit)
-			Stock(produit=produit, motif = data.motif,\
-				quantite=-math.sqrt(float(data.quantite)**2)).save()
+		form = OutStockForm(id_produit, request.POST)
+		if(form.is_valid()):
+			form.save()
 		return render(request, self.template_name, locals())
 
 class CommandeView(LoginRequiredMixin, View):

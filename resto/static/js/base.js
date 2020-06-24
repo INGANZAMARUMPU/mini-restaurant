@@ -47,23 +47,7 @@ $(".url_button").off('click').on('click', function(event) {
 	.done(function(data) {
 		$(form_content).html(data);
 		$popup_form.addClass('active');
-		$(form_content).find("form").on("submit",function (e) {
-			e.preventDefault();
-			e.stopPropagation();
-			$.ajax({
-				url: url,
-				type: 'POST',
-				data: $(this).serialize(),
-			})
-			.done(function() {
-				window.location = window.location;
-			})
-			.fail(function() {
-				alert("error");
-			})
-			.always(function() {
-			});
-		});
+		changeFormUrl(form_content, url)
 	})
 	.fail(function() {
 		console.log("error");
@@ -72,6 +56,30 @@ $(".url_button").off('click').on('click', function(event) {
 		console.log("complete");
 	});
 });
+function changeFormUrl(form_content, url){
+	$(form_content).find("form").on("submit",function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: $(this).serialize(),
+		})
+		.done(function(data) {
+			$(form_content).html(data);
+			changeFormUrl(form_content, url);
+			errors = $(form_content).find(".errorlist");
+			if(errors.length==0){
+				window.location = window.location;
+			}
+		})
+		.fail(function() {
+			alert("error");
+		})
+		.always(function() {
+		});
+	});
+}
 
 $(".popup").on('mousedown', function(event) {
 	if(!event.target.matches('.popup-body, .popup-body *')){

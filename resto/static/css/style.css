@@ -3,19 +3,17 @@
 	--font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	--font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
-
 *{
 	box-sizing: border-box;
 	text-decoration: none;
   	margin: 0;
   	padding: 0;	
 }
-
 html {
 	font-family: sans-serif;
 	line-height: 1.15;
-  	margin: 0;
-  	padding: 0;
+	margin: 0;
+	padding: 0;
 }
 body,#body {
 	background: #eee;
@@ -23,7 +21,6 @@ body,#body {
 	padding: 0;
 	min-height: 100vh;
 }
-
 h1, .title{
 	text-align: center;
 	width: 100%;
@@ -47,20 +44,20 @@ h3{
 	justify-content: center;
 }
 .search-input{
-  padding: .5em;
-  margin: 5px;
-  font-size: 1.2em;
-  background: white;
-  border: 1px solid black;
-  border-radius: 4px;
+	padding: .5em;
+	margin: 5px;
+	font-size: 1.2em;
+	background: white;
+	border: 1px solid black;
+	border-radius: 4px;
 }
 ul{
 	margin:0;
 	padding: 0;
 }
 .search-form button{
-  margin-top: 5px;
-  margin-bottom: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 .user-card{
 	display: flex;
@@ -95,30 +92,30 @@ ul{
 	width: 100%;
 }
 .login-form {
-  background: #fff;
-  padding: 2em;
-  width: 30em;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
-  transform: translate(-50%, -50%);
+	background: #fff;
+	padding: 2em;
+	width: 30em;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	border-radius: 4px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+	transform: translate(-50%, -50%);
 }
 
 .input {
-  width: 100%;
-  padding: .5em;
-  font-size: 1.2em;
-  background: white;
-  border: 1px solid black;
-  border-radius: 4px;
+	width: 100%;
+	padding: .5em;
+	font-size: 1.2em;
+	background: white;
+	border: 1px solid black;
+	border-radius: 4px;
 }
 
 label {
-  display: block;
-  cursor: text;
-  color: #777;
+	display: block;
+	cursor: text;
+	color: #777;
 }
 .right{
 	float: right;
@@ -150,8 +147,8 @@ button:hover, .btn:hover{
 .floating-top{
 	top: 100px;
 	display: flex;
-    flex-direction: column;
-    background:transparent;
+	flex-direction: column;
+	background:transparent;
 }
 .floating-top.floating-left{
 	border-radius: 0px 5px 5px 0px;
@@ -167,7 +164,7 @@ button:hover, .btn:hover{
 }
 .floating-top > *{
 	padding: 5px;
-    background:#333;
+	background:#333;
 }
 .floating-menu{
 	position: fixed;
@@ -176,14 +173,14 @@ button:hover, .btn:hover{
 }
 .top-menu {
 	top:0;
-    position: relative;
-    transform: translate(0, 0);
-    background: #333;
-    padding: 0px;
-    display: flex;
-    position: sticky;
-    z-index: 3;
-    justify-content: space-around;
+	position: relative;
+	transform: translate(0, 0);
+	background: #333;
+	padding: 0px;
+	display: flex;
+	position: sticky;
+	z-index: 3;
+	justify-content: space-around;
 }
 li{
 	list-style-type: none;
@@ -197,11 +194,11 @@ li{
 	list-style-type: none;
 	width: 100%;
 	display: block;
-    text-align: start;
+	text-align: start;
 }
 .submenu a{
 	font-size: .8em;
-    background: #333;
+	background: #333;
 }
 .submenu{
 	position: absolute;
@@ -216,6 +213,12 @@ li{
 	justify-content : center;
 	flex-direction: column;
 	align-content: center;
+}
+.center-parent{
+	margin-top: 5px;
+	left: 50%;
+	position: relative;
+	transform: translate(-50%, 0);
 }
 .recycler{
 	display: flex;
@@ -336,6 +339,7 @@ label.noir-blanc{
 	padding: 5px;
 }
 .header-panier{
+	white-space: nowrap;
 	font-size: 1.5em;
 	margin: 2px;
 	font-weight: bold;
@@ -370,6 +374,9 @@ label.noir-blanc{
 }
 tr th{
 	background-color: #f5f5f5;
+}
+tr:nth-child(even) {
+  background-color: #ccc;
 }
 .table button, .table .btn{
 	padding: 3px 1em;

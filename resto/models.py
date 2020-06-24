@@ -48,27 +48,53 @@ class Produit(models.Model):
 	class Meta:
 		ordering = ["nom"]
 
+class DetailStock(models.Model):
+	stock = models.ForeignKey('Stock', on_delete=models.CASCADE)
+	quantite = models.FloatField()
+	date = models.DateTimeField(blank=True, default=timezone.now)
+	motif = models.CharField(max_length=64, blank=True, null=True)
+
+	def save(self, *args, **kwargs):
+		stock = self.stock
+		stock.quantite_actuelle -= abs(self.quantite)
+		stock.save() 
+		super(DetailStock, self).save(*args, **kwargs)
+
+	def __str__(self):
+		return f"{self.stock.produit} du {self.stock.date} -\
+			{self.quantite} {self.stock.produit.unite}"
+
 class Stock(models.Model):
 	produit = models.ForeignKey("Produit", on_delete=models.CASCADE)
-	offre = models.ForeignKey("Offre", blank=True, null=True, on_delete=models.SET_NULL)
-	quantite = models.FloatField()
+	offre = models.ForeignKey("Offre", null=True, on_delete=models.SET_NULL)
+	quantite_initiale = models.FloatField(verbose_name='quantité initial')
+	quantite_actuelle = models.FloatField(editable=False, verbose_name='quantité actuelle')
 	date = models.DateField(blank=True, default=timezone.now)
 	expiration = models.PositiveIntegerField(default=7, null=True, blank=True, verbose_name="délais de validité(en jours)")
 	expiration_date = models.DateField(editable=False, null=True)
 	personnel = models.ForeignKey("Personnel", null=True, on_delete=models.SET_NULL)
 	# is_valid = models.BooleanField(default=True)
-	motif = models.CharField(max_length=64, blank=True, null=True)
+
+	def __str__(self):
+		return f"{self.produit} {self.quantite_actuelle} {self.produit.unite} du {self.date}"
 
 	def save(self, *args, **kwargs):
+		if self.quantite_actuelle == None:
+			self.quantite_actuelle = self.quantite_initiale
 		if self.expiration:
 			self.expiration_date=self.date+timedelta(days=self.expiration)
 		super(Stock, self).save(*args, **kwargs)
 		self.calculateProxy()
 
 	def calculateProxy(self):
-		somme = Stock.objects.filter(produit=self.produit).aggregate(somme=Sum('quantite'))
+		somme = Stock.objects.filter(produit=self.produit, \
+				quantite_actuelle__gt=0)\
+			.aggregate(somme=Sum('quantite_actuelle'))
 		self.produit.quantite = somme['somme']
 		self.produit.save()
+
+	def somme(self):
+		return self.quantite_initiale*self.offre.prix
 
 	class Meta:
 		ordering = ["produit"]

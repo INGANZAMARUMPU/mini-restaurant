@@ -3,11 +3,11 @@ var panier = {};
 function templatePanier(id, name, prix, quantite){
 	total=prix*quantite;
 	return`
-	<tr class="panier-item" data-id="`+id+`">
-		<td class="panier-name">`+name+`</td>
-		<td class="panier-prix">`+prix+`</td>
-		<td class="panier-quantite">`+quantite+`</td>
-		<td class="panier-total">`+total+`</td>
+	<tr class="panier-item" data-id="${id}">
+		<td class="panier-name">${name}</td>
+		<td class="panier-prix">${prix}</td>
+		<td class="panier-quantite">${quantite}</td>
+		<td class="panier-total">${total}</td>
 		<td><button class="panier_moins">-</button></td>
 		<td><button class="panier_plus">+</button></td>
 	</tr>
@@ -58,9 +58,8 @@ $("#valider-panier").on('click', function(event) {
 			data: JSON.stringify(panier),
 		})
 		.done(function(data) {
-			console.log(data);
-			console.log("success");
-			window.location=window.location;
+			// window.location=window.location;
+			window.location ="/";
 		})
 		.fail(function() {
 			console.log("error");
@@ -82,7 +81,6 @@ $("#valider_imprimer").on('click', function(event) {
 		})
 		.done(function(data) {
 			printDiv(data);
-			console.log("success");
 		})
 		.fail(function() {
 			console.log("error");
@@ -153,51 +151,51 @@ function templateFacture(facture){
  	str_lignes_facture=`
 <tr>
 <td>
-Facture no. `+facture.id+" "+facture.date+`<br>
-Serveur: <b>`+facture.serveur+`</b><br></br>
-RC 013456572</br></br>
-Chaussée PL Rwagasore</br>
-Rohero 1 Quartier INSS</br>
+Facture no. ${facture.id+" "+facture.date}<br/>
+Serveur: <b>${facture.serveur}</b><br/><br/>
+<!-- RC <hr style="margin-top:0"/> -->
+Chaussée PL Rwagasore<br/>
+Rohero 1 Quartier INSS<br/>
 </td>
 </tr>
 <tr>
-<td><b>`+facture.table+`</b></td>
+<td><b>${facture.table}</b></td>
 </tr>
 <tr>
 <td>
 <table style="width:100%;">
 <tbody>
 <tr>
-<th style="text-align: left;">Article</th>
-<th style="text-align: left;">P.U.</th>
-<th style="text-align: left;">Qt.</th>
-<th style="text-align: left;">Total</th>
+<th style="border-bottom: 1px solid #aaa;text-align: left;">Article</th>
+<th style="border-bottom: 1px solid #aaa;text-align: left;">P.U.</th>
+<th style="border-bottom: 1px solid #aaa;text-align: left;">Qt.</th>
+<th style="border-bottom: 1px solid #aaa;text-align: right;">Total</th>
 </tr>`;
  	for(var item of facture.factures){
 		str_lignes_facture += `
 		<tr>
-			<td>`+item.name+`</td>
-			<td>`+item.prix+`</td>
-			<td> x `+item.quantite+`</td>
-			<td>&nbsp;`+item.total+`</td>
+			<td>${item.name}</td>
+			<td>${item.prix}</td>
+			<td> x ${item.quantite}</td>
+			<td style="text-align:right">&nbsp;${item.total}</td>
 		</tr>`
 	}
 	str_lignes_facture +=`
 <tr>
-<th style="text-align: left;">Total</th>
-<th style="text-align: left;">&nbsp;</th>
-<th style="text-align: left;">&nbsp;</th>
-<th style="text-align: left;"><b>`+facture.total+`</b></th>
+<th style="border-top: 1px solid #aaa;text-align: left;">Total</th>
+<th style="border-top: 1px solid #aaa;text-align: left;">&nbsp;</th>
+<th style="border-top: 1px solid #aaa;text-align: left;">&nbsp;</th>
+<th style="border-top: 1px solid #aaa;text-align: right;"><b>${facture.total}</b></th>
 </tr>
 </tbody>
 </table>
 </td>
 </tr>
 <tr>
-<td>Caissier `+facture.caissier+`</td>
+<td>Caissier ${facture.caissier}</td>
 </tr>
 <tr>
-<br>
+<br/>
 <td style="text-align: center;"><strong>Merci</strong></td>
 </tr>
 `;
@@ -213,4 +211,5 @@ function printDiv(object_facture) {
 	a.document.close(); 
 	a.print();
     a.close();
+	window.location ="/"
 }

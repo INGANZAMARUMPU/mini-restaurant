@@ -18,8 +18,8 @@ class InStockForm(forms.ModelForm):
 	offre = forms.ModelChoiceField(
 		widget = forms.Select(
 			attrs={'placeholder':'offre','class':'input'}),
-		queryset = Offre.objects.all())
-	quantite = forms.IntegerField(
+		queryset=None)
+	quantite_initiale = forms.IntegerField(
 		widget=forms.NumberInput(
 			attrs={'placeholder':'quantite','class':'input'}))
 	expiration = forms.IntegerField(
@@ -29,7 +29,7 @@ class InStockForm(forms.ModelForm):
 		required=False);
 	class Meta:
 		model = Stock
-		fields = ("offre", "quantite", "expiration")
+		fields = ("offre", "quantite_initiale", "expiration")
 
 	def __init__(self, produit_id, *args, **kwargs):
 		self.base_fields["offre"].queryset = Offre.objects.filter(produit=produit_id)
@@ -52,6 +52,10 @@ class PayForm(forms.ModelForm):
 		fields = ("payee",)
 
 class OutStockForm(forms.ModelForm):
+	stock = forms.ModelChoiceField(
+		widget = forms.Select(
+			attrs={'placeholder':'stock','class':'input'}),
+		queryset=None)
 	quantite = forms.IntegerField(
 		widget=forms.NumberInput(
 			attrs={'placeholder':'quantite','class':'input'}))
@@ -63,6 +67,18 @@ class OutStockForm(forms.ModelForm):
 		choices=MOTIF_CHOICES
 	)
 
+	def __init__(self, produit_id, *args, **kwargs):
+		self.base_fields["stock"].queryset = Stock.objects.filter(\
+			produit=produit_id, quantite_actuelle__gt=0)
+		super(OutStockForm, self).__init__(*args, **kwargs)
+
 	class Meta:
-		model = Stock
-		fields = ("quantite", "motif")
+		model = DetailStock
+		fields = ("stock", "quantite", "motif")
+
+	def clean_quantite(self, *args, **kwargs):
+		stock = self.cleaned_data.get("stock")
+		quantite = self.cleaned_data.get("quantite")
+		if quantite > stock.quantite_actuelle:
+			raise forms.ValidationError("quantité demandée est énorme")
+		return quantite

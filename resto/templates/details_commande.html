@@ -15,16 +15,16 @@
 				<th>Name</th>
 				<th>price</th>
 				<th>quantity</th>
-				<th>total</th>
+				<th style="text-align:right">total</th>
 			</tr>
 		</thead>
-		<tbody class=".popup-content">
+		<tbody class=".popup-content" id="object_facture">
 		{% for detail in details %}
 			<tr class="panier-item" data-id="{{ detail.id }}">
 			<td class="panier-name">{{ detail.recette.nom }}</td>
 			<td class="panier-prix">{{ detail.recette.prix }}</td>
-			<td class="panier-quantite">{{ detail.quantite }}</td>
-			<td class="panier-total">{{ detail.somme }}</td>
+			<td class="panier-quantite">x {{ detail.quantite }}</td>
+			<td class="panier-total" style="text-align:right">{{ detail.somme }}</td>
 		</tr>
 		{% endfor %}
 		</tbody>
@@ -33,10 +33,35 @@
 				<td>total</td>
 				<td></td>
 				<td></td>
-				<td id="total">{{ commande.a_payer }}</td>
+				<td id="total" style="text-align:right">{{ commande.a_payer }}</td>
 			</tr>
 		</tfoot>
 	</table>
+	<button onclick="imprimerFacture()" class="center-parent">imprimer</button>
 </div>
+{% block printable_facture %}
+<div id="printable" style="display:none;background:white">
+<table style="width:280px;">
+	<thead>
+		<tr>
+			<th>
+				<img src="{% static "img/fidodido.png" %}">
+			</th>
+		</tr>
+	</thead>
+	<tbody id="printable-body">
+	</tbody>
+</table>
+</div>
+{% endblock printable_facture %}
+<script src="{% static 'js/print_details.js' %}" type="text/javascript" charset="utf-8" async defer></script>
+<script type="text/javascript">
+function imprimerFacture(){
+	printDiv("{{ commande.id }}", "{{ commande.date }}",
+		"{{ commande.serveur }}", "{{ commande.table }}",
+		"{{ commande.a_payer }}", "{{ user }}",
+		$("#object_facture").html());
+}
+</script>
 </body>
 </html>
