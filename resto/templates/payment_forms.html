@@ -8,13 +8,17 @@
 </head>
 <body>
 <div id="modal-form">
+    <h3 class="center-parent">Payment facture #{{ id_commande }}</h3>
 	{% if commande.reste %}
 	<form action="{% url 'payer_commande' id_commande %}" method="post" >
 		{% csrf_token %}
 		la somme à payer est <b><span id="a-payer">{{ commande.a_payer|default:0 }}</span></b>
 		{{ form.as_p }}
     	la somme à rendre est <b><span id="a-rendre">0</span></b>
-    	<input type="submit" name="submit" value="submit" class="btn right">
+        <div class="btns">
+            <button onclick="remplire(event)">auto</button>
+        	<input type="submit" name="submit" value="submit" class="btn right">
+        </div>
     	<script type="text/javascript">
     		$apayer = $("#a-payer");
     		$arendre = $("#a-rendre");
@@ -24,6 +28,10 @@
     			apayer = parseFloat($apayer.text());
     			$arendre.text(saisies-apayer);
     		});
+            function remplire(event){
+                event.preventDefault();
+                $saisies.val(parseFloat($apayer.text()));
+            }
     	</script>
 	</form>
 	{% else %}

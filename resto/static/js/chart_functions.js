@@ -48,7 +48,7 @@ function plotBar(element, url, label){
         }
         resizeChart(element, labels.length);
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'pie',
             data: {
                 labels: labels,
                 colors : randomColor(labels.length), // personnalization

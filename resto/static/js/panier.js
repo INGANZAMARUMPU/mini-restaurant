@@ -148,17 +148,25 @@ function calculateTotal(){
 }
 
 function templateFacture(facture){
+	console.log(facture.date);
+	date = new Date(facture.date).toLocaleDateString("fr-FR",{year: 'numeric', month: 'long', day: 'numeric'})
  	str_lignes_facture=`
 <tr>
 <td>
-Facture no. ${facture.id+" "+facture.date}<br/>
+Facture no. ${facture.id+" "+date}<br/>
 Serveur: <b>${facture.serveur}</b><br/><br/>
-<!-- RC <hr style="margin-top:0"/> -->
-Chaussée PL Rwagasore<br/>
-Rohero 1 Quartier INSS<br/>
 </td>
 </tr>
 <tr>
+<td>
+RC .......................<br/>
+NIF .......................<br/>
+Tel: 79 991 419 / 75 790 436<br/>
+FIDODIDO BAR-RESTAURANT<br/>
+Chaussée PL Rwagasore<br/>
+Rohero 1 Quartier INSS<br/><br/>
+</tr>
+</td>
 <td><b>${facture.table}</b></td>
 </tr>
 <tr>
@@ -201,7 +209,6 @@ Rohero 1 Quartier INSS<br/>
 `;
 	return str_lignes_facture;
 }
-
 function printDiv(object_facture) { 
 	str_facture = templateFacture(object_facture);
 	$("#printable-body").html(str_facture);
@@ -210,6 +217,6 @@ function printDiv(object_facture) {
 	a.document.write($("#printable").html()); 
 	a.document.close(); 
 	a.print();
-    a.close();
-	window.location ="/"
+ //    a.close();
+	// window.location ="/"
 }

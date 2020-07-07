@@ -159,6 +159,12 @@ class DetailCommandeView(LoginRequiredMixin, View):
 	def get(self, request, id_commande, *args, **kwargs):
 		commande = Commande.objects.get(id=id_commande)
 		details = DetailCommande.objects.filter(commande=commande)
+		return render(request, self.template_name, locals())
+
+	def post(self, request, id_commande, *args, **kwargs):
+		commande = Commande.objects.get(id=id_commande)
+		if commande:
+			commande.delete()
 		return render(request, self.template_name, locals())	
 
 def disconnect(request):

@@ -2,11 +2,11 @@
 {% load static %}
 {% block content %}
 <form class="search-form">
-	<input type="text" value="#" placeholder="Keyword" class="search-input" id="id_username">
+	<input type="text" placeholder="Keyword" class="search-input" id="id_username" autofocus  value="#" onfocus="var temp_value=this.value; this.value=''; this.value=temp_value">
 	<button type="reset">X</button>
 </form>
 <div class="scrollable-tab">
-	<table class="table commandes" style="min-width: 700px;">
+	<table class="table commandes">
 		<thead>
 			<tr class="panier-item">
 				<th>id</th>
@@ -16,7 +16,7 @@
 				<th>payée</th>
 				<th>Reste</th>
 				<th>Date</th>
-				<th></th>
+				<th><button onclick="toggleTableSize(event)">toggle display</button></th>
 			</tr>
 		</thead>
 		<tbody id="commandes">
@@ -65,5 +65,14 @@
 <script src="{% static 'js/commandes.table.js' %}" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	search('search-form', 'commande-item');
+	function toggleTableSize(event){
+		$table = $(event.target).parents("table");
+		$table.toggleClass("center-parent");
+		if ($table.hasClass("center-parent")){
+			$table.width("auto");
+		}else{
+			$table.width("100%");
+		}
+	}
 </script>
 {% endblock content %}

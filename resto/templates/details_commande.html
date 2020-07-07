@@ -37,7 +37,13 @@
 			</tr>
 		</tfoot>
 	</table>
-	<button onclick="imprimerFacture()" class="center-parent">imprimer</button>
+		<div class="btns">
+			<form action="{% url 'details' id_commande %}" method="post" >
+				{% csrf_token %}
+		    	<input type="submit" name="delete" value="delete" class="btn right">
+			</form>
+			<button onclick="imprimerFacture()">imprimer</button>
+		</div>
 </div>
 {% block printable_facture %}
 <div id="printable" style="display:none;background:white">

@@ -120,6 +120,10 @@ label {
 .right{
 	float: right;
 }
+.btns{
+	display: flex;
+	justify-content: space-around;
+}
 button, .btn{
 	padding: .6em 1.2em .6em 1.2em;
 	font-size: 1em;
@@ -127,6 +131,7 @@ button, .btn{
 	border-radius: 8px;
 	border-width: 0;
 	color: white;
+	margin: 5px;
 }
 button.left-button{
 	border-radius: 0px 0px 0px 8px;
@@ -218,6 +223,7 @@ li{
 	margin-top: 5px;
 	left: 50%;
 	position: relative;
+	text-align: center;
 	transform: translate(-50%, 0);
 }
 .recycler{

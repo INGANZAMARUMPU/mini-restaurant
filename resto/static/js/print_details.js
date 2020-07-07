@@ -4,9 +4,12 @@ function templateFacture(id, date, serveur, table, total, caissier, facture_body
 <td>
 Facture no. ${id+" "+date}<br>
 Serveur: <b>${serveur}</b><br><br/>
-<!-- RC <hr style="margin-top:0"/> -->
+RC .......................<br/>
+NIF .......................<br/>
+Tel: 79 991 419 / 75 790 436<br/>
+FIDODIDO BAR-RESTAURANT<br/>
 Chaussée PL Rwagasore<br/>
-Rohero 1 Quartier INSS<br/>
+Rohero 1 Quartier INSS<br/><br/>
 </td>
 </tr>
 <tr>
@@ -38,7 +41,10 @@ ${facture_body}
 </tr>
 <tr>
 <br>
-<td style="text-align: center;"><strong>Merci</strong></td>
+<td style="text-align: center;"><strong>Merci à biento!</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Thank you see you soon!</strong></td>
 </tr>
 `;
 	return str_lignes_facture;
