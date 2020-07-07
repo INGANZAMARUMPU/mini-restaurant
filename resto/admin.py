@@ -47,10 +47,10 @@ class RecetteAdmin(admin.ModelAdmin):
 	ordering = ("nom", "image", "details")
 
 class CommandeAdmin(admin.ModelAdmin):
-	list_display = ("table", "tel", "date", "a_payer", "payee", "reste")
-	list_filter = ("table", "tel", "date", "a_payer", "payee", "reste")
-	search_field = ("table", "tel", "date", "a_payer", "payee", "reste")
-	ordering = ("table", "tel", "date", "a_payer", "payee", "reste")
+	list_display = ("table", "serveur", "date", "a_payer", "payee", "reste")
+	list_filter = ("table", "serveur", "date", "a_payer", "payee", "reste")
+	search_field = ("table", "serveur", "date", "a_payer", "payee", "reste")
+	ordering = ("table", "serveur", "date", "a_payer", "payee", "reste")
 
 class PaiementAdmin(admin.ModelAdmin):
 	list_display = ("commande","somme","date")
