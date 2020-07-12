@@ -43,6 +43,23 @@ h3{
 	display: flex;
 	justify-content: center;
 }
+.date-form{
+	display: inline-table;
+    position: absolute;
+    z-index: 1;
+    background: cadetblue;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px black;
+    font: small-caption;
+    left: 50%;
+    margin-bottom: 10px;
+    transform: translate(-50%, 10px);
+}
+.date-form label{
+	color: white;
+	font-weight: bold;
+	margin-left: 10px;
+}
 .search-input{
 	padding: .5em;
 	margin: 5px;
@@ -423,5 +440,14 @@ td{
 	}
 	.recycler{
 		justify-content: space-around;
+	}
+	.date-form{
+	    position: relative;
+	    box-shadow: 0 0 0;
+	    background-color: #eee;
+	    justify-content: center;
+	}
+	.date-form label{
+		color: black;
 	}
 }

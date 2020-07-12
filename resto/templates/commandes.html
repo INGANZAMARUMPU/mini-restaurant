@@ -1,10 +1,18 @@
 {% extends "index.html" %}
 {% load static %}
 {% block content %}
-<form class="search-form">
-	<input type="text" placeholder="Keyword" class="search-input" id="id_username" autofocus  value="#" onfocus="var temp_value=this.value; this.value=''; this.value=temp_value">
-	<button type="reset">X</button>
-</form>
+<form class="top-form">
+	<div class="search-form">
+		<input type="text" placeholder="Keyword" class="search-input" id="id_username" autofocus  value="#" onfocus="var temp_value=this.value; this.value=''; this.value=temp_value">
+		<button type="reset">X</button>
+		<button type="reset" onclick="showDateForm()">Date</button>
+	</div>
+	<div class="date-form"> <!-- style="display:none;"> -->
+		{% csrf_token %}
+		{{ date_form.as_p }}
+		<button type="submit" style="height:3em;">Search</button>
+	</div>
+</form> 
 <div class="scrollable-tab">
 	<table class="table commandes">
 		<thead>
@@ -73,6 +81,11 @@
 		}else{
 			$table.width("100%");
 		}
+	}
+	function showDateForm(){
+		$date_form = $(".date-form");
+		$date_form.toggle();
+		resizeTable();
 	}
 </script>
 {% endblock content %}
