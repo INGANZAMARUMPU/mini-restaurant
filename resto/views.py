@@ -60,10 +60,21 @@ class CommandeMgtView(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
 		today = date.today()
 		date_form = DateForm()
-		# sdate = today.replace(day = 1)
-		# edate = today.replace(month=(today.month+1)%12, day=1) - timedelta(days=1)
 		tomorrow = today - timedelta(days=1)
 		commandes = Commande.objects.filter(date__gte=tomorrow, date__lte=today)
+		return render(request, self.template_name, locals())
+
+	def post(self, request, *args, **kwargs):
+		date_form = DateForm(request.POST)
+		
+		if date_form.is_valid():
+			sdate = date_form.cleaned_data["sdate"]
+			edate = date_form.cleaned_data["edate"]
+		# today = date.today()
+		# sdate = today.replace(day = 1)
+		# edate = today.replace(month=(today.month+1)%12, day=1) - timedelta(days=1)
+		# tomorrow = today - timedelta(days=1)
+		commandes = Commande.objects.filter(date__gte=sdate, date__lte=edate)
 		return render(request, self.template_name, locals())
 
 class StockInView(LoginRequiredMixin, View):

@@ -44,7 +44,7 @@ h3{
 	justify-content: center;
 }
 .date-form{
-	display: inline-table;
+	display: none;
     position: absolute;
     z-index: 1;
     background: cadetblue;

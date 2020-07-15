@@ -88,10 +88,12 @@ class Register2Form(forms.Form):
 	cni_verso = forms.ImageField( widget=forms.FileInput(attrs={'placeholder':'CNI Picture 2','class':'form-control'}), label='CNI Picture 2')
 
 class DateForm(forms.Form):
-	sdate = forms.DateField(widget=forms.SelectDateWidget(
+	sdate = forms.DateField(
+		widget=forms.SelectDateWidget(
 			years=range(2020, date.today().year),
 			attrs={'placeholder':'date delivrated ', 'class':'search-input',
 			'style':'display:inline-block; width:auto'}),
+		initial=datetime.now(),
 		label='Du')
 
 	edate = forms.DateField(
@@ -99,4 +101,5 @@ class DateForm(forms.Form):
 			years=range(2020, date.today().year),
 			attrs={'placeholder':'yyyy-mm-dd ', 'class':'search-input',
 				'style':'width: auto;display: inline-block;'}),
+		initial=datetime.now(),
 		label='Au')

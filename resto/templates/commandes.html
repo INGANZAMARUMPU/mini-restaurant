@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% load static %}
 {% block content %}
-<form class="top-form">
+<form class="top-form" method="POST" action="{% url 'commandes' %}">
 	<div class="search-form">
 		<input type="text" placeholder="Keyword" class="search-input" id="id_username" autofocus  value="#" onfocus="var temp_value=this.value; this.value=''; this.value=temp_value">
 		<button type="reset">X</button>
