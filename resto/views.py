@@ -18,6 +18,14 @@ def stringToDate(str_date:str)->datetime.date:
 	else:
 		datetime.date.today()
 
+class Button():
+	"""html Button"""
+	def __init__(self, name, value, args):
+		self.name = name
+		self.value = value
+		self.args = args
+		
+
 class Home(LoginRequiredMixin, View):
 	template_name = "index.html"
 
@@ -70,10 +78,6 @@ class CommandeMgtView(LoginRequiredMixin, View):
 		if date_form.is_valid():
 			sdate = date_form.cleaned_data["sdate"]
 			edate = date_form.cleaned_data["edate"]
-		# today = date.today()
-		# sdate = today.replace(day = 1)
-		# edate = today.replace(month=(today.month+1)%12, day=1) - timedelta(days=1)
-		# tomorrow = today - timedelta(days=1)
 		commandes = Commande.objects.filter(date__gte=sdate, date__lte=edate)
 		return render(request, self.template_name, locals())
 
@@ -82,10 +86,12 @@ class StockInView(LoginRequiredMixin, View):
 
 	def get(self, request, id_produit,*args, **kwargs):
 		form = InStockForm(id_produit)
+		new_button = Button('offre', 'Ajouter une offre', id_produit)
 		return render(request, self.template_name, locals())
 
 	def post(self, request, id_produit, *args, **kwargs):
 		form = InStockForm(id_produit, request.POST)
+		new_button = Button('offre', 'Ajouter une offre', id_produit)
 		if(form.is_valid):
 			stock = form.save(commit=False)
 			stock.produit=stock.offre.produit
@@ -115,12 +121,30 @@ class StockOutView(LoginRequiredMixin, View):
 
 	def get(self, request, id_produit, *args, **kwargs):
 		form = OutStockForm(id_produit)
+		new_button = Button('add_offre', 'Ajouter une offre', id_produit)
 		return render(request, self.template_name, locals())
 
 	def post(self, request, id_produit, *args, **kwargs):
 		form = OutStockForm(id_produit, request.POST)
-		if(form.is_valid()):
+		new_button = Button('add_offre', 'Ajouter une offre', id_produit)
+		if form.is_valid():
 			form.save()
+		return render(request, self.template_name, locals())
+
+class OffreView(LoginRequiredMixin, View):
+	template_name = "forms.html"
+
+	def get(self, request, id_produit, *args, **kwargs):
+		form = OffreForm()
+		return render(request, self.template_name, locals())
+
+	def post(self, request, id_produit, *args, **kwargs):
+		form = OffreForm(request.POST)
+		if(form.is_valid()):
+			produit = get_object_or_404(Produit, id=id_produit)
+			offre = form.save(commit=False)
+			offre.produit = produit
+			offre.save()
 		return render(request, self.template_name, locals())
 
 class CommandeView(LoginRequiredMixin, View):

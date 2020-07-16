@@ -10,9 +10,15 @@
 <div>
 	<form action="." method="post" id="modal-form">
 		{% csrf_token %}
+		{% if new_button %}
+			<a href="{% url new_button.name new_button.args %}" class="btn right url_button">
+				{{ new_button.value }}
+			</a>
+		{% endif %}
 		{{ form.as_p }}
     	<input type="submit" name="submit" value="submit" class="btn right">
 	</form>
 </div>
+<script src="{% static 'js/base.js' %}" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

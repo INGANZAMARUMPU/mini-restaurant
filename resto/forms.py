@@ -1,6 +1,12 @@
 from .models import *
 from django import forms
 
+MOTIF_CHOICES = ( 
+    ("vers_cuisine", "vers cuisine"), 
+    ("vers_caisse", "vers caisse"), 
+    ("perime", "perimé"),
+)
+
 class ConnexionForm(forms.Form):
 	username = forms.CharField(
 		widget=forms.TextInput(
@@ -35,11 +41,18 @@ class InStockForm(forms.ModelForm):
 		self.base_fields["offre"].queryset = Offre.objects.filter(produit=produit_id)
 		super(InStockForm, self).__init__(*args, **kwargs)
 
-MOTIF_CHOICES = ( 
-    ("vers_cuisine", "vers cuisine"), 
-    ("vers_caisse", "vers caisse"), 
-    ("perime", "perimé"),
-)
+class OffreForm(forms.ModelForm):
+	fournisseur = forms.ModelChoiceField(
+		widget = forms.Select(
+			attrs={'placeholder':'offre','class':'input'}),
+		queryset=Fournisseur.objects.all())
+	prix = forms.IntegerField(widget=forms.NumberInput(
+			attrs={'placeholder':'prix','class':'input'}
+		)
+	);
+	class Meta:
+		model = Offre
+		fields = ("fournisseur", "prix")
 
 class PayForm(forms.ModelForm):
 	payee = forms.IntegerField(
