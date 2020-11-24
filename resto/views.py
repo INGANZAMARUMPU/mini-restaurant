@@ -121,12 +121,12 @@ class StockOutView(LoginRequiredMixin, View):
 
 	def get(self, request, id_produit, *args, **kwargs):
 		form = OutStockForm(id_produit)
-		new_button = Button('add_offre', 'Ajouter une offre', id_produit)
+		new_button = Button('offre', 'Ajouter une offre', id_produit)
 		return render(request, self.template_name, locals())
 
 	def post(self, request, id_produit, *args, **kwargs):
 		form = OutStockForm(id_produit, request.POST)
-		new_button = Button('add_offre', 'Ajouter une offre', id_produit)
+		new_button = Button('offre', 'Ajouter une offre', id_produit)
 		if form.is_valid():
 			form.save()
 		return render(request, self.template_name, locals())
